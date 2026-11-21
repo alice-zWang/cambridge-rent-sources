@@ -2,7 +2,7 @@
 
 People moving to Cambridge, Massachusetts for school or work get very different answers to a simple question: *what does an apartment cost?* This project compares public rent sources for Cambridge, measures how far apart they are, and explains why.
 
-**Project website:** `https://<your-username>.github.io/cambridge-rent-sources/` (see [Publishing the website](#publishing-the-website))
+**Project website:** `https://alice-zWang.github.io/cambridge-rent-sources/` (see [Publishing the website](#publishing-the-website))
 
 ![Typical Cambridge rent from seven sources](figures/fig4_sources_all_sizes.png)
 
