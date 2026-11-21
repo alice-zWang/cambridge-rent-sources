@@ -41,7 +41,8 @@ cambridge-rent-sources/
 │   ├── research-design.md        Question, evaluation, refined questions, methods
 │   ├── coding-framework.md       Deductive codebook for source documentation
 │   ├── ethics-checklist.md       Consent, privacy, harm, power, IRB
-│   └── positionality.md          Researcher positionality statement
+│   ├── positionality.md          Researcher positionality statement
+│   └── annotated-bibliography.md 11 annotated sources (APA), grouped by theme
 └── docs/                     Project website (GitHub Pages)
 ```
 
@@ -60,6 +61,7 @@ This rewrites everything in `results/`, `figures/` and `docs/assets/` from `data
 
 - **Statistical tests:** least-squares regression of median rent on year with a t-test for the slope (H₀: β = 0, two-sided, α = 0.05), checked with residual plots and a Shapiro–Wilk test; paired t-tests on the yearly city–HUD and city–Census gaps; regressions of each gap on year.
 - **Qualitative coding:** a deductive codebook (7 codes, 21 sub-codes) applied to the documentation of 10 city housing datasets. See [methods/coding-framework.md](methods/coding-framework.md).
+- **Literature:** an [annotated bibliography](methods/annotated-bibliography.md) of 11 sources on how rent data are built, why asking and paid rents diverge, and listing data as research data.
 - **Ethics and positionality:** see [methods/ethics-checklist.md](methods/ethics-checklist.md) and [methods/positionality.md](methods/positionality.md).
 
 ## Data sources
