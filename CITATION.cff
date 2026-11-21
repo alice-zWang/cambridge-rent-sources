@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Cambridge Rent: How Much Do Sources Disagree?"
+authors:
+  - family-names: Wang
+    given-names: Zhaohan (Alice)
+date-released: 2026-11-21
+url: "https://github.com/<your-username>/cambridge-rent-sources"
+license: MIT

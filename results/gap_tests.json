@@ -1,0 +1,28 @@
+{
+  "paired_t_test": {
+    "n_pairs": 10,
+    "mean_gap": 818.2,
+    "sd_gap": 518.9,
+    "t": 4.99,
+    "df": 9,
+    "p_value": 0.0008
+  },
+  "gap_trend": {
+    "slope_per_year": -115.7,
+    "r": -0.919,
+    "p_value": 0.0002
+  },
+  "gap_first": {
+    "year": 2013,
+    "gap": 1546
+  },
+  "gap_last": {
+    "year": 2025,
+    "gap": 234
+  },
+  "growth": {
+    "city_2br_pct": 5.8,
+    "hud_2br_pct": 102.3
+  },
+  "caveat": "Years are treated as independent pairs; a time series is not, so p-values are approximate."
+}
