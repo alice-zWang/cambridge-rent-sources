@@ -39,9 +39,9 @@
   h3 { font-size: 18px; margin: 0 0 8px; color: var(--navy); }
   p { margin: 0 0 14px; max-width: 72ch; }
   .kicker { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); font-weight: 700; margin: 0 0 8px; }
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 28px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 28px; }
   .stat { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; }
-  .stat .num { font-family: var(--serif); font-size: 44px; line-height: 1; color: var(--navy); margin-bottom: 10px; }
+  .stat .num { font-family: var(--serif); font-size: 38px; line-height: 1; color: var(--navy); margin-bottom: 10px; }
   .stat p { margin: 0; color: var(--muted); font-size: 15px; }
   figure { margin: 28px 0 0; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
   figure img { width: 100%; height: auto; display: block; }
@@ -78,6 +78,7 @@
     <a class="brand" href="#top">Cambridge Rent</a>
     <a href="#findings">Findings</a>
     <a href="#sources">Sources</a>
+    <a href="#asked-paid">Asked vs. paid</a>
     <a href="#trend">Trend</a>
     <a href="#methods">Methods</a>
     <a href="#about">About</a>
@@ -100,10 +101,11 @@
 <section id="findings">
   <div class="wrap">
     <p class="kicker">Key findings</p>
-    <h2>Three things a newcomer should know</h2>
+    <h2>Four things a newcomer should know</h2>
     <div class="stats">
       <div class="stat"><div class="num">$965</div><p>Gap between the lowest and highest "typical rent" across seven public sources ($2,742 to $3,707 a month).</p></div>
       <div class="stat"><div class="num">$1,546 → $234</div><p>How much the city's 2-bedroom median exceeded HUD's Fair Market Rent in 2013 vs. 2025. The gap is closing.</p></div>
+      <div class="stat"><div class="num">~$390</div><p>How much more new renters were asked than current renters paid each month, 2015–2024 (1- and 2-bedrooms). This gap is shrinking too.</p></div>
       <div class="stat"><div class="num">+$42 / −$38</div><p>Yearly change in median 2-bedroom rent, 2010–2025: up in dollars, down after inflation.</p></div>
     </div>
   </div>
@@ -140,9 +142,25 @@
   </div>
 </section>
 
-<section id="trend">
+<section id="asked-paid">
   <div class="wrap">
     <p class="kicker">Finding 3</p>
+    <h2>New renters pay a premium, but it is shrinking</h2>
+    <p>The city's asking rents (what a newcomer sees in listings) were higher than the Census median rent paid by all renter households in Cambridge: by <b>$390 a month for 1-bedrooms</b> (about 20%, paired t = 5.06, df = 8, p = 0.001) and <b>$384 for 2-bedrooms</b> (about 16%, t = 4.42, p = 0.002), 2015–2024.</p>
+    <p>Rent paid rose about 40% over those years while the city's asking rents rose 4–9%, so by 2024 the gap had nearly closed. Census rent includes utilities and the city's usually does not, so the real premium is, if anything, larger.</p>
+    <figure>
+      <img src="assets/fig7_asked_vs_paid.png" alt="Two line charts, 1-bedroom and 2-bedroom, 2015–2024: city asking rent stays above Census rent paid until about 2023, when the lines meet." loading="lazy">
+      <figcaption>City median asking rent (September) vs. Census ACS 1-year median gross rent, all renter households. Error bars show the Census 90% margin of error. No 2020 Census release.</figcaption>
+    </figure>
+    <div class="reasons" style="grid-template-columns: 1fr;">
+      <div class="reason"><h3>An open question</h3><p>HUD and the Census both show Cambridge-area rents rising roughly 40–100% over the decade, while the city's asking-rent series rose under 10%. Either asking rents really stayed flat while existing tenants caught up, or the city's series, whose listing sources aren't published, understates growth. That is the next thing to test.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="trend">
+  <div class="wrap">
+    <p class="kicker">Finding 4</p>
     <h2>Rising in dollars, falling after inflation</h2>
     <p>A t-test for the slope of a regression line on the city's data (n = 16 years, 2010–2025) asks whether median rent has a linear trend over time. H<sub>0</sub>: β = 0; H<sub>a</sub>: β ≠ 0; α = 0.05.</p>
     <div class="tablebox">
@@ -200,6 +218,7 @@ python analysis/run_all.py</code></pre>
       <li>The city data is not a random sample, and yearly values are not independent.</li>
       <li>HUD figures cover the whole Boston metro and were available for 11 fiscal years; HUD later revised FY2025, and the original values are used.</li>
       <li>Commercial site figures are one-time snapshots from different months with different methods.</li>
+      <li>Census 1-year estimates carry margins of error of roughly ±$90–230 for 1- and 2-bedrooms.</li>
       <li>No neighborhood-level rents or studio data from the city yet.</li>
     </ul>
   </div>
@@ -217,6 +236,7 @@ python analysis/run_all.py</code></pre>
       <li><a href="https://cambridgema.gov/CDD/factsandmaps/housingdata">City of Cambridge, housing data methods</a></li>
       <li><a href="https://www.huduser.gov/portal/datasets/fmr.html">HUD Fair Market Rents</a></li>
       <li><a href="https://www.census.gov/quickfacts/fact/table/cambridgecitymassachusetts/INC110223">U.S. Census Bureau, QuickFacts: Cambridge city</a></li>
+      <li><a href="https://www.census.gov/data/developers/data-sets/acs-1year.html">U.S. Census Bureau, American Community Survey 1-year estimates (table B25031)</a></li>
       <li>Zillow, Apartments.com, Zumper, Redfin, RentCafe and Point2 published rent pages (links in the data files)</li>
     </ul>
   </div>

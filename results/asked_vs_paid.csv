@@ -1,0 +1,4 @@
+bedrooms,n_years,mean_gap,sd_gap,mean_gap_pct,t,df,p_value,gap_first,gap_last,gap_trend_per_year,gap_trend_p,city_growth_pct,acs_growth_pct
+1BR,9,389.9,231.3,19.9,5.06,8,0.001,718,126,-55.1,0.0166,4.2,41.1
+2BR,9,384.3,261.1,15.6,4.42,8,0.0022,573,-58,-44.0,0.1336,9.1,40.5
+3BR,9,807.9,389.9,32.2,6.22,8,0.0003,1174,574,-58.9,0.1866,27.3,72.8

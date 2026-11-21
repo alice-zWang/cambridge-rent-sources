@@ -27,10 +27,17 @@ Rent by bedroom count from the City of Cambridge (Sept 2025), HUD Fair Market Re
 HUD Fair Market Rents for the Boston-Cambridge-Quincy, MA-NH HUD Metro FMR Area, 1–3 bedrooms, for the fiscal years found in published schedules (FY2014, 2015, 2017–2021, 2024–2027). A fiscal year starts on October 1 of the previous calendar year. Each row lists the document it came from.
 Notes: FMRs are 40th-percentile gross rents (including utilities) across about 112 towns. HUD later revised the FY2025 figures; the original values are used here. FY2027 values come from a secondary summary, not a HUD document.
 
+### `census_acs1_gross_rent_by_bedroom.csv`
+U.S. Census Bureau, American Community Survey 1-year estimates, table B25031 (median gross rent by bedrooms), Cambridge city, MA (state 25, place 11000), 2015–2024. Downloaded Nov 21, 2026 with `analysis/00_fetch_census.py`.
+Gross rent is contract rent plus utilities, for **all** renter households (not just new leases). `_moe` columns are 90% margins of error. There is no standard 2020 1-year release. The 2024 3-bedroom value ($3,501) is the Census top code meaning "$3,500 or more", and Census returned no margin of error for it.
+
 ## processed/
 
 ### `city_vs_hud.csv`
 City September values (year *t*) paired with the HUD fiscal year that starts the following October (FY *t*+1).
+
+### `city_vs_acs.csv`
+City September asking rents paired with the Census 1-year estimate for the same calendar year, by bedroom count.
 
 ## Terms
 

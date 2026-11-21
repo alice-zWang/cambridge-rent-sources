@@ -26,11 +26,14 @@ Make it easier for people moving to Cambridge, MA for school or work to understa
 
 - A t-test for the slope of a regression line on the city's rent data, 2010–2025 ([analysis/01_rent_trend_tests.py](../analysis/01_rent_trend_tests.py))
 - A seven-source comparison and a city-vs-HUD paired comparison ([analysis/02_compare_sources.py](../analysis/02_compare_sources.py))
+- Asking rent (city listings) vs. rent paid by all renters (Census), by bedroom count ([analysis/03_asked_vs_paid.py](../analysis/03_asked_vs_paid.py))
 - A deductive coding framework for the documentation of 10 city housing datasets ([coding-framework.md](coding-framework.md))
 - An ethics checklist ([ethics-checklist.md](ethics-checklist.md)) and a positionality statement ([positionality.md](positionality.md))
 
 ## Planned next steps
 
-- Add Zillow's Observed Rent Index history and Census median gross rent by bedroom count (both need bulk downloads or an API key)
+- Add Zillow's Observed Rent Index history (Census rent by bedroom count was added in Nov 2026)
+- Test why the city's asking-rent series grew far less than HUD and Census rents
+- Add neighborhood-level rents from the city's Rental Housing Cost Tracker
 - Have a second coder apply the codebook to 2–3 datasets and compare results
 - Ask the Cambridge Community Development Department which listing sources feed its rent figures
