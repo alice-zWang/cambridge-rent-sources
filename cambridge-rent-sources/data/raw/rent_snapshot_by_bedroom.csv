@@ -1,0 +1,14 @@
+source,bedrooms,value_usd_month,date,measure,url
+City of Cambridge CDD,1,2700,2025-09,median advertised rent (market-rate),https://data.cambridgema.gov/d/n9xk-8wft
+City of Cambridge CDD,2,3175,2025-09,median advertised rent (market-rate),https://data.cambridgema.gov/d/n9xk-8wft
+City of Cambridge CDD,3,3600,2025-09,median advertised rent (market-rate),https://data.cambridgema.gov/d/n9xk-8wft
+HUD Fair Market Rent FY2026,0,2359,2025-10-01,40th percentile gross rent (Boston metro),https://www.nhhfa.org/wp-content/uploads/2025/09/2026-Fair-Market-Rents.pdf
+HUD Fair Market Rent FY2026,1,2476,2025-10-01,40th percentile gross rent (Boston metro),https://www.nhhfa.org/wp-content/uploads/2025/09/2026-Fair-Market-Rents.pdf
+HUD Fair Market Rent FY2026,2,2941,2025-10-01,40th percentile gross rent (Boston metro),https://www.nhhfa.org/wp-content/uploads/2025/09/2026-Fair-Market-Rents.pdf
+HUD Fair Market Rent FY2026,3,3526,2025-10-01,40th percentile gross rent (Boston metro),https://www.nhhfa.org/wp-content/uploads/2025/09/2026-Fair-Market-Rents.pdf
+Zillow Rentals,0,2400,2025-10-30,average listed rent,https://www.zillow.com/rental-manager/market-trends/cambridge-ma
+Zillow Rentals,1,2900,2025-08-13,average listed rent,https://www.zillow.com/rental-manager/market-trends/cambridge-ma/?bedrooms=1
+Apartments.com,0,2842,2026-05,average listed apartment rent,https://www.apartments.com/local-guide/cambridge-ma/
+Apartments.com,1,3339,2026-05,average listed apartment rent,https://www.apartments.com/local-guide/cambridge-ma/
+Apartments.com,2,4298,2026-05,average listed apartment rent,https://www.apartments.com/local-guide/cambridge-ma/
+Apartments.com,3,5333,2026-05,average listed apartment rent,https://www.apartments.com/local-guide/cambridge-ma/

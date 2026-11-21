@@ -1,0 +1,12 @@
+fiscal_year,effective_from,br1,br2,br3,source_url
+2014,2013-10-01,1164,1454,1811,https://www.huduser.gov/portal/datasets/home-datasets/files/HOME_RentLimits_State_MA_2014.pdf
+2015,2014-10-01,1196,1494,1861,https://www.huduser.gov/portal/datasets/home-datasets/files/HOME_RentLimits_State_MA_2015.pdf
+2017,2016-10-01,1372,1691,2116,https://www.mass.gov/doc/fair-market-rent-17-attachment-to-phn-2016-30-0/download
+2018,2017-10-01,1421,1740,2182,https://chapa.org/node/49735
+2019,2018-10-01,1561,1902,2383,https://www.mass.gov/doc/fair-market-rent-fy-2019/download
+2020,2019-10-01,1900,2311,2880,https://www.mass.gov/doc/2020-home-rent-limits/download
+2021,2020-10-01,1924,2336,2906,https://testwww.masshousing.com/-/media/Files/Developers/Income-Rent-Limits/2021_HUD_FairMarketRents.ashx
+2024,2023-10-01,2377,2827,3418,https://huduser.gov/portal/datasets/home-datasets/files/HOME_RentLimits_State_MA_2024.pdf
+2025,2024-10-01,2394,2837,3418,https://www.mass.gov/doc/2025-fair-market-rent/download
+2026,2025-10-01,2476,2941,3526,https://www.nhhfa.org/wp-content/uploads/2025/09/2026-Fair-Market-Rents.pdf
+2027,2026-10-01,2518,3008,3584,https://startbusinessbystate.com/?p=20015
