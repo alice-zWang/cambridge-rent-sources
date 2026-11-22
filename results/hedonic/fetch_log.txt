@@ -1,0 +1,29 @@
+download: cambridge_property_db_fy2016_fy2027.csv
+  ok: 147,066,451 bytes
+download: cambridge_crime_reports.csv
+  ok: 17,888,788 bytes
+download: cambridge_neighborhoods.geojson
+  ok: 245,903 bytes
+download: acs5_2024_b19013_median_household_income.dat
+  ok: 17,917,916 bytes
+download: acs5_2024_b25064_median_gross_rent.dat
+  ok: 17,272,062 bytes
+download: cb_2023_25_tract_500k.zip
+  ok: 648,114 bytes
+download: MBTA_GTFS.zip
+  ok: 19,815,915 bytes
+download: L3_SHP_M049_CAMBRIDGE.zip
+  ok: 4,473,735 bytes
+download: L3_SHP_M274_SOMERVILLE.zip
+  ok: 4,051,464 bytes
+download: L3_SHP_M010_ARLINGTON.zip
+  ok: 3,728,863 bytes
+download: L3_SHP_M207_NEWTON.zip
+  ok: 10,038,669 bytes
+download: L3_SHP_M046_BROOKLINE.zip
+  ok: 3,270,259 bytes
+download: dese_mcas_district_5towns.csv
+  ok: 3,537,274 bytes
+download: dese_per_pupil_spending_5towns.csv
+  ok: 8,407 bytes
+wrote data/raw/hedonic/SOURCES.md

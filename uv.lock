@@ -28,6 +28,7 @@ name = "cambridge-rent-sources"
 version = "0.2.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "certifi" },
     { name = "esda" },
     { name = "geopandas" },
     { name = "libpysal" },
@@ -46,6 +47,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "certifi", specifier = ">=2026.11.20" },
     { name = "esda", specifier = ">=2.10.0" },
     { name = "geopandas", specifier = ">=1.2.0" },
     { name = "libpysal", specifier = ">=4.15.1" },

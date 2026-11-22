@@ -1,0 +1,14 @@
+step,name,rule,rows_before,rows_after,rows_removed,note
+1,load,all rows of all fiscal-year snapshots,354003,354003,0,"dropped owner columns: owner_name, owner_coownername, owner_address, owner_address2, owner_city, owner_state, owner_zip; text 'None' read as missing; sale date 01/01/1900 and book/page '/' treated as no sale recorded"
+2,has_sale,sale price and sale date both present,354003,310209,43794,
+3,dedupe,same parcel + date + price seen in several snapshots -> keep the first snapshot,310209,45279,264930,features come from the snapshot closest after the sale
+4,price_corrections,same parcel + date with different prices in different snapshots -> keep the most recent snapshot (treated as a correction),45279,45231,48,
+5,window,sale year 2016-2025,45231,18168,27063,first snapshot (FY2016) records sales up to 2015-07-14; earlier years only show each home's last sale as of then (incomplete)
+6,non_market,"sale price <= $1,000",18168,10114,8054,"of which $0: 1,686, $1: 3,982"
+7,residential,"keep condo, luxury condo, 1-3 family",10114,9304,810,largest removed classes: 4-8-UNIT-APT (152); GEN-OFFICE (59); OFFICE-CONDO (46); >8-UNIT-APT (39); RETAIL-STORE (34); MULTIUSE-RES (34)
+8,size_location,living area > 0 and coordinates present,9304,9236,68,
+9,flag_low_ratio,price < 10% of assessed value,9236,9236,0,flagged 12 rows (kept)
+10,flag_multi_parcel,several parcels recorded on the same deed and date (price is often a total for all of them),9236,9236,0,flagged 197 rows (kept)
+11,flag_ppsf_extreme,price per sq ft in bottom/top 0.5% of its group,9236,9236,0,flagged 96 rows (kept)
+12,flag_bedrooms_missing,bedroom count missing,9236,9236,0,flagged 0 rows (kept)
+13,main_sample,main sample excludes flag_low_ratio and flag_multi_parcel,9236,9027,209,excluded rows stay in the file for robustness checks
