@@ -7,3 +7,8 @@ venv/
 Thumbs.db
 # Never commit participant data
 data/private/
+
+# Hedonic study: raw downloads stay local (large; property file has owner names).
+# Re-create with: uv run python analysis/hedonic/00_fetch_data.py
+data/raw/hedonic/*
+!data/raw/hedonic/SOURCES.md
