@@ -12,3 +12,5 @@ data/private/
 # Re-create with: uv run python analysis/hedonic/00_fetch_data.py
 data/raw/hedonic/*
 !data/raw/hedonic/SOURCES.md
+# Hand-entered values (cannot be re-downloaded by script), so they are committed
+!data/raw/hedonic/manual/

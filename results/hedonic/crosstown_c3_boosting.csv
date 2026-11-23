@@ -1,0 +1,9 @@
+model,cv,rmse,r2,median_abs_pct_error,town,value
+boosting,tracts held out (10 folds),0.2487317773445396,0.8037306711769772,12.317680840263206,,
+OLS (C1),tracts held out (10 folds),0.2613732542804092,0.7832734182350732,13.693555043690475,,
+boosting,SHAP town contribution vs Cambridge (%),,,,Cambridge,0.0
+boosting,SHAP town contribution vs Cambridge (%),,,,Somerville,-24.818895851342383
+boosting,SHAP town contribution vs Cambridge (%),,,,Arlington,-32.49536960598229
+boosting,SHAP town contribution vs Cambridge (%),,,,Newton,-27.896527365252588
+boosting,SHAP town contribution vs Cambridge (%),,,,Brookline,-11.515469588440808
+boosting,town x living-area interaction rank (of 45 pairs),,,,,1.0

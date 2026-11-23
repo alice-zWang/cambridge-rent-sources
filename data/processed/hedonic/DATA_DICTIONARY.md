@@ -68,3 +68,31 @@ Built by `analysis/hedonic/20_build_features.py`. Same rows as `sales_clean.csv`
 | `model_sample` | TRUE if in the Model 1 sample (main sample with all features; used for Phases 2–3) |
 | `market_sample` | `model_sample` without `flag_restricted_likely`: the main sample from Phase 4 on (decided 2026-11-22, after seeing Phase 3 results) |
 | `robust_sample` | TRUE if all features are present (including flagged sales) |
+
+# Data dictionary: `crosstown_sales.csv` (Phase 4)
+
+One row per property: its **most recent** sale since 2016 in the MassGIS L3 assessor tables for
+Cambridge, Somerville, Arlington, Newton and Brookline. Built by `analysis/hedonic/55_crosstown_build.py`.
+The cleaning steps and row counts are in `results/hedonic/crosstown_cleaning_log.csv`: 27,480 sales
+in 102 census tracts. Owner fields are never read.
+
+| Column | Meaning |
+|---|---|
+| `town` | Municipality |
+| `PROP_ID`, `LOC_ID` | MassGIS property ID and parcel location ID |
+| `group` | single_family (use code 101), condo (102), two_family (104), three_family (105) |
+| `is_condo` | 1 if condo |
+| `saledate`, `sale_year`, `sale_quarter`, `sale_time` | Last sale date; year; year-quarter; decimal year |
+| `price`, `log_price` | Last sale price ($) and its natural log |
+| `living_area`, `log_area` | Residential living area (`RES_AREA`, sq ft) and its log |
+| `rooms` | Total rooms (`NUM_ROOMS`), capped at 15 |
+| `year_built`, `age_group` | Year built; grouped as in Model 1 (`unknown` if invalid) |
+| `house_log_lot` | log(lot size in sq ft) for houses; 0 for condos |
+| `assessed_total`, `assessment_fy` | Current total assessed value and its fiscal year (the file's year, not the sale year) |
+| `x`, `y` | Centre of the tax parcel, Massachusetts State Plane (metres, EPSG:26986) |
+| `tract`, `income`, `log_income` | Census tract (2023 boundaries); ACS 2020–2024 median household income; log |
+| `transit_km`, `nearest_station` | Distance to, and name of, the nearest MBTA rapid-transit station open on the sale date (all lines; GLX gated by opening date) |
+| `source_file` | MassGIS assessor table the row came from |
+
+The files have different end dates: Somerville to 2024-07, Cambridge to 2025-07, Newton to 2025-10,
+Arlington to 2026-02 and Brookline to 2026-04. Sale-quarter fixed effects absorb the timing.

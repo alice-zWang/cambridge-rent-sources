@@ -1,0 +1,10 @@
+step,rule,rows_before,rows_after,rows_removed,after_Cambridge,after_Somerville,after_Arlington,after_Newton,after_Brookline
+0,"all assessor records, 5 towns",111767,111767,0,28812,19013,15663,30165,18114
+1,"last sale on/after 2016-01-01 and price > $1,000",111767,30272,81495,6068,5852,4568,8338,5446
+2,"residential use codes 101, 102, 104, 105",30272,28205,2067,5532,5445,4388,7768,5072
+3,"drop multi-parcel sales (same town, book, page, date on several records)",28205,27871,334,5424,5271,4373,7749,5054
+4,drop price below 10% of current total assessed value,27871,27829,42,5416,5257,4364,7744,5048
+5,"living area 300-10,000 sq ft",27829,27756,73,5403,5248,4356,7732,5017
+6,drop likely deed-restricted (price and assessed $/sq ft both < 0.5 x median),27756,27522,234,5291,5168,4347,7702,5014
+7,"parcel location found, inside a census tract with an ACS income estimate",27522,27521,1,5291,5167,4347,7702,5014
+8,"rooms recorded, and lot size recorded for houses",27521,27480,41,5288,5164,4315,7701,5012

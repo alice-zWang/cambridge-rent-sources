@@ -141,3 +141,12 @@ Every file in this folder is an **unedited** download, made by `analysis/hedonic
 - **SHA-256:** `8eda0f9173c3d2bbd78491a92b7201bb84228246ef9b4eec0e5fb9dc828d854d`
 - **What it is:** Per-pupil spending by school year for the five districts. Filtered on the server.
 - **Terms:** Commonwealth of Massachusetts open data portal terms apply (see portal).
+
+## `manual/dls_tax_rates_by_class.csv` (hand-entered)
+
+- **Publisher:** Massachusetts Department of Revenue, Division of Local Services (DLS), Data Analytics and Resources Bureau
+- **Dataset:** Municipal Databank, "Tax Rates by Class" report
+- **URL:** <https://dls-gw.dor.state.ma.us/reports/rdPage.aspx?rdReport=PropertyTaxInformation.taxratesbyclass.taxratesbyclass_main>
+- **Read:** 2026-11-23 in a web browser (the report page said "Data current as of 11/23/2026"), filtered to the five municipalities, fiscal years 2023–2027. **Not a download:** the report cannot be fetched by script, so the values were copied by hand into this CSV, exactly as shown (dollars per $1,000 of assessed value). Empty FY2027 rows (not yet set) were left out.
+- **What it is:** Tax rates by property class. Used only as context in the cross-town table (Phase 4). It does not show residential exemptions, which some of these cities use; those are not captured here.
+- **Terms:** Public government data.
