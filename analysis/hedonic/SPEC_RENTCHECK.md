@@ -30,4 +30,5 @@ asks whether tracts with more crime, higher income or closer stations have highe
   `analysis/hedonic/70_rent_check.py`.
 
 ## Changes after seeing results
-*(none yet)*
+
+- One tract has no published margin of error. It is kept, and counted as not flagged.
