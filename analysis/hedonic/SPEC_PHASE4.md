@@ -159,4 +159,25 @@ condition or grade**, so this model is coarser than Model 1.
   `data/processed/hedonic/crosstown_sales.csv` with an added section in the data dictionary.
 
 ## Changes after seeing results
-*(none yet)*
+
+- **Categorical features coded as numbers, not with native categorical splits.** Found in a
+  tooling test *before* any model ran on the real data. SHAP's `TreeExplainer` gives wrong values
+  for scikit-learn's native categorical splits: in a synthetic test, the contributions did not add
+  up to the predictions (error of 7.6 on the log scale). So condition and grade are coded in their
+  natural order, and home type and neighborhood as 0/1 columns. SHAP values of the 0/1 columns are
+  summed back up to one value per feature. Check 2 of `verify_shap.py` documents this.
+- **Cross-town cleaning step 8** (implementation detail): 41 sales with no recorded rooms, or with
+  no lot size for a house, are dropped. The spec treated rooms = 0 as missing but did not say what
+  to do with missing values.
+- **Tax rates:** the DLS report could not be fetched by script (HTTP 403), so it was read in a web
+  browser on 2026-11-23 and the values were copied by hand into
+  `data/raw/hedonic/manual/dls_tax_rates_by_class.csv`, with a note in `SOURCES.md`.
+- **Diagnostic for the G2 cross-validation** (after seeing results). The linear benchmark scored
+  0.30 in one tract fold. In that fold Baldwin's only tract was held out, so the neighborhood was
+  absent from training. A second fold had the same issue for Strawberry Hill. This is reported in
+  the summary. No numbers were changed.
+- `fig_h11` was redrawn after seeing it, with shorter axis labels; only the labels changed. It was
+  redrawn from `model4_cv.csv` using the same figure code; rerunning `50_boosting_shap.py` produces
+  the same figure.
+- **Transit far-distance pattern** (exploratory): the share of sales more than 1.2 km from a station
+  that are in West Cambridge was counted after seeing the SHAP curve.

@@ -1,0 +1,30 @@
+version,feature,label,mean_abs_shap,share_top5_refits
+G1,log_area,Living area (log),0.2832651975491121,1.0
+G1,sale_time,Sale date,0.09239538389283838,1.0
+G1,fullbaths,Full baths,0.058689798795906765,0.9333333333333333
+G1,condition,Condition,0.05399140294636729,0.9333333333333333
+G1,grade,Grade,0.05343014199046765,0.9333333333333333
+G1,group,Home type,0.04022690330847038,0.2
+G1,log_income,Tract income (log),0.036914867340278254,0.0
+G1,halfbaths,Half baths,0.03438643415187522,0.0
+G1,bedrooms,Bedrooms,0.02493032442877404,0.0
+G1,crime_violent_500,Violent crime nearby,0.02210669493739611,0.0
+G1,parking,Parking spaces,0.021221616364841198,0.0
+G1,year_built,Year built,0.017281269207062095,0.0
+G1,transit_km,Distance to station (km),0.016197677462397073,0.0
+G1,crime_property_500,Property crime nearby,0.012432514253131396,0.0
+G2,log_area,Living area (log),0.2820865457433416,1.0
+G2,sale_time,Sale date,0.09226347955041553,1.0
+G2,fullbaths,Full baths,0.058134012813266134,0.9666666666666667
+G2,condition,Condition,0.05316596443809532,0.8666666666666667
+G2,grade,Grade,0.05220867007296433,0.9666666666666667
+G2,group,Home type,0.038854686724942224,0.2
+G2,halfbaths,Half baths,0.03414360353662081,0.0
+G2,neighborhood,Neighborhood,0.033717246217096895,0.0
+G2,bedrooms,Bedrooms,0.02576075900721069,0.0
+G2,parking,Parking spaces,0.021664900225218584,0.0
+G2,log_income,Tract income (log),0.02000151428515641,0.0
+G2,transit_km,Distance to station (km),0.018764269452957137,0.0
+G2,year_built,Year built,0.01566244198937687,0.0
+G2,crime_violent_500,Violent crime nearby,0.015447890398934221,0.0
+G2,crime_property_500,Property crime nearby,0.008551309241033676,0.0
