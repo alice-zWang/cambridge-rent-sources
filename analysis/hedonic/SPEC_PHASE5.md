@@ -97,4 +97,11 @@ permanent saving at 4% or 6% a year, that is 0.456/4 = 11.4% or 0.456/6 = 7.6% o
   line on each side, adjusted for home features)
 
 ## Changes after seeing results
-*(none yet)*
+
+- **`fig_h18` redrawn.** The first version adjusted the points with a separate model without the
+  side and distance terms. Its segment fixed effects absorbed part of the gap, so the jump looked
+  smaller (about 11 points) than the estimate (17%). The points are now B1's residuals plus B1's
+  own side and distance terms, and the lines are B1's fit, so the figure shows the estimate that is
+  reported. No estimate changed.
+- Segment S7 (the easternmost 1 km) has no Somerville sales within 250 m, so it only helps to
+  estimate the controls. Check 6 drops it.
