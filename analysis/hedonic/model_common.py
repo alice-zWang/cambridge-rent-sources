@@ -2,7 +2,8 @@
 
 Paths, the headline variables and their labels, the Model 1 formula, the fitting function
 (standard errors clustered by census tract), the data loader, and the "% price difference" helper.
-Used by 30_hedonic_ols.py, 35_interactions.py and 40_spatial.py so all models share one definition.
+Used by 30_hedonic_ols.py, 35_interactions.py, 40_spatial.py and 45_restricted_check.py so all
+models share one definition.
 """
 from pathlib import Path
 
@@ -33,10 +34,15 @@ def fit(df, f, cluster="tract"):
     return smf.ols(f, data=df).fit(cov_type="cluster", cov_kwds={"groups": groups})
 
 
-def load():
-    """All sales with features, and the Model 1 sample (reset index)."""
+def load(sample="model_sample"):
+    """All sales with features, and one analysis sample (reset index).
+
+    sample="model_sample": the pre-specified Model 1 sample, used for Phases 2-3.
+    sample="market_sample": the same without likely deed-restricted sales, the main sample from
+    Phase 4 on (decided 2026-11-22 after seeing Phase 3 results).
+    """
     df_all = pd.read_csv(PROC / "sales_features.csv", parse_dates=["saledate"])
-    return df_all, df_all[df_all["model_sample"]].reset_index(drop=True)
+    return df_all, df_all[df_all[sample]].reset_index(drop=True)
 
 
 def pct(b, d):

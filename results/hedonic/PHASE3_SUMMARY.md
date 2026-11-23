@@ -115,8 +115,10 @@ certainty.
 - Spatial: same picture (Moran's I 0.18 for sales, 0.06 between buildings).
 
 **The overall conclusions do not change.** But these sales should not count as market sales.
-Recommendation: **remove them from the main sample from Phase 4 on**, and report Phases 2–3 both
-ways. This changes the sample definition, so it needs your OK.
+
+**Decision (2026-11-22): removed from the main sample from Phase 4 on.** Phase 4 onward uses
+8,823 sales (9,024 minus the 201 flagged ones; cleaning-log step 6). Phases 2–3 stay reported
+both ways: the pre-specified results above, and the re-run without these sales in this section.
 
 ## Overall picture after Phases 2–3
 

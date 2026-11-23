@@ -225,7 +225,9 @@ all_sales["log_land"] = np.log(all_sales["landarea"].where(all_sales["landarea"]
 # so they are not market sales. The flag needs BOTH a low assessment and a low price, each below
 # half the median per sq ft for the same home type (assessment: same fiscal year; price: same sale
 # year), so a genuine bargain with a normal assessment is not flagged. It does not change
-# model_sample; it is used as a robustness check (45_restricted_check.py).
+# model_sample (Phases 2-3, as pre-specified; re-run without the flag in 45_restricted_check.py).
+# Decision 2026-11-22 (user): from Phase 4 on the main sample is market_sample = model_sample
+# without flagged sales (see below).
 RESTRICT_REL = 0.5
 a_ppsf = all_sales["assessedvalue"] / all_sales["interior_livingarea"]
 all_sales["rel_assessed_ppsf"] = a_ppsf / a_ppsf.groupby(
@@ -255,6 +257,10 @@ for flagged in (False, True):
         model_ids = set(d["pid"].astype(str) + d["saledate"].astype(str))
 
 all_sales["model_sample"] = (all_sales["pid"].astype(str) + all_sales["saledate"].astype(str)).isin(model_ids)
+# Phase 4 on: main sample without likely deed-restricted sales (decided after seeing results).
+all_sales["market_sample"] = all_sales["model_sample"] & ~all_sales["flag_restricted_likely"]
+note("6", int(all_sales["model_sample"].sum()), int(all_sales["market_sample"].sum()),
+     "Phase 4 on only: drop likely deed-restricted sales (market_sample)")
 all_sales["robust_sample"] = (all_sales[keep_cols].notna().all(axis=1) & all_sales["condition"].notna()
                               & all_sales["grade"].notna())
 out = all_sales.drop(columns=[c for c in all_sales.columns if c == "geometry"])
@@ -265,6 +271,7 @@ m = out[out["model_sample"]]
 print(pd.DataFrame(log).to_string(index=False))
 print("crime reports:", crime_counts)
 print(f"reporting areas: {len(areas)}, of which near a commercial square: {int(areas['square'].sum())}")
+print(f"market sample (Phase 4 on): {int(out['market_sample'].sum()):,}")
 print(f"model sample: {len(m):,}; tracts {m['tract'].nunique()}; neighborhoods {m['neighborhood'].nunique()}")
 print(m[["crime_violent_500", "crime_property_500", "income", "transit_km",
          "transit_km_allstations"]].describe().round(2).to_string())

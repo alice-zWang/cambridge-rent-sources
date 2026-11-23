@@ -4,3 +4,4 @@ step,rule,rows_before,rows_after,rows_removed
 3,inside a census tract,9024,9024,0
 4,tract has an ACS income estimate,9024,9024,0
 5,condition and grade recorded,9024,9024,0
+6,Phase 4 on only: drop likely deed-restricted sales (market_sample),9024,8823,201

@@ -64,6 +64,7 @@ Built by `analysis/hedonic/20_build_features.py`. Same rows as `sales_clean.csv`
 | `age_group`, `condition`, `grade` | Grouped year built, overall condition and construction grade (see spec) |
 | `log_area`, `bedrooms`, `fullbaths`, `halfbaths`, `parking`, `floor`, `log_land` | Tidy home features (capped as in the spec) |
 | `rel_assessed_ppsf`, `rel_price_ppsf` | Assessed value per sq ft, and price per sq ft, relative to the median for the same home type and year |
-| `flag_restricted_likely` | TRUE if both relative values are below 0.5 (likely deed-restricted; Phase 3, robustness only) |
-| `model_sample` | TRUE if in the Model 1 sample (main sample with all features) |
+| `flag_restricted_likely` | TRUE if both relative values are below 0.5 (likely deed-restricted; robustness check in Phase 3, excluded from `market_sample`) |
+| `model_sample` | TRUE if in the Model 1 sample (main sample with all features; used for Phases 2–3) |
+| `market_sample` | `model_sample` without `flag_restricted_likely`: the main sample from Phase 4 on (decided 2026-11-22, after seeing Phase 3 results) |
 | `robust_sample` | TRUE if all features are present (including flagged sales) |

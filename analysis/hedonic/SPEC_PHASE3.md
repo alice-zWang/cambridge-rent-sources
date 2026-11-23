@@ -85,5 +85,10 @@ at most 0.5 m, with a fixed random seed, and that is reported.
   `model_sample` is unchanged and all pre-specified results use it. Models 1–3 were re-run
   without them as a robustness check. The 0.5 threshold was chosen after looking at the
   distribution: a clear low group below about 0.35, then a gap up to about 0.6.
+- **Decision (user, 2026-11-22): drop them from Phase 4 on.** A new column `market_sample`
+  (`model_sample` without flagged sales; 8,823 sales) is the main sample for Phase 4 onward
+  (`model_common.load("market_sample")`). `model_sample` and every Phase 2–3 output are kept
+  as they were, so Phases 2–3 are reported both ways: as pre-specified, and without the flagged
+  sales (`45_restricted_check.py`). Cleaning log step 6.
 - Shared model definitions moved to `model_common.py`. Model 1 outputs are byte-identical after
   the move.

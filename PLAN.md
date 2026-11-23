@@ -92,6 +92,10 @@ year built). Limits: probably **only the most recent sale per parcel**, and **no
    - Trim extreme price per sq ft (top and bottom 0.5%) **only as a sensitivity check**, never
      silently.
    - Every threshold is fixed **before** looking at regression results.
+   - *Exception, added in Phase 3:* likely deed-restricted affordable sales (price and assessed
+     value both below half the median per sq ft) were found in the Model 1 residuals, so this
+     threshold was set **after** seeing results. They are excluded from Phase 4 on
+     (`market_sample`); Phases 2–3 are reported with and without them. See `SPEC_PHASE3.md`.
 4. **Cleaned data** goes in `data/processed/hedonic/` (no owner fields), with a data dictionary.
 
 ---
