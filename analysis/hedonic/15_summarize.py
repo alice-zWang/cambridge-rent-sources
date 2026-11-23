@@ -137,7 +137,7 @@ lines = ["# Source checks (step 15)", "",
 crime = pd.read_csv(RAW / "cambridge_crime_reports.csv", dtype=str)
 crime.columns = [c.strip() for c in crime.columns]
 dcol = next(c for c in crime.columns if "report" in c.lower() and "date" in c.lower())
-yrs = pd.to_datetime(crime[dcol], errors="coerce").dt.year
+yrs = pd.to_datetime(crime[dcol], format="%m/%d/%Y %I:%M:%S %p", errors="coerce").dt.year
 acol = next(c for c in crime.columns if c.lower().replace(" ", "_") == "reporting_area")
 lines += ["## Crime reports", "",
           f"- {len(crime):,} reports; columns: {', '.join(crime.columns)}",

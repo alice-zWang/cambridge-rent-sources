@@ -111,4 +111,10 @@ sq ft. 4. Transit bands. 5. All stations, both sides of the river. 6. Crime radi
 
 ## Changes after seeing results
 
-*(none yet)*
+- **Leave-one-neighborhood-out table** (diagnostic, added after the bootstrap gave a much wider
+  interval for transit than the tract-clustered one). It re-fits the model 12 times, each time
+  without one neighborhood. Exploratory; it changes no estimate.
+- The wild bootstrap code was moved into `wildboot.py` and checked by `verify_wild_bootstrap.py`
+  (exact match with brute-force refits; 4.3% rejection under a true null at the 5% level). Method
+  unchanged.
+- Figure styling only (labels, legend position).
