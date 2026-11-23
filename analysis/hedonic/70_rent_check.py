@@ -58,10 +58,23 @@ FACT = {"violent": "Violent crime nearby", "property": "Property crime nearby",
         "log_income": "Tract income (log)", "transit_km": "Distance to station (km)",
         "condo_ppsf": "Condo price per sq ft"}
 cor = []
+rng = np.random.default_rng(20261123)
 for v, lab in FACT.items():
     s = t[["log_rent", v]].dropna()
     rho, p = spearmanr(s["log_rent"], s[v])
-    cor.append({"factor": v, "label": lab, "n_tracts": len(s), "spearman_rho": rho, "p": p})
+    n = len(s)
+    # 95% CI, Fisher z with the Bonett-Wright (2000) standard error for Spearman's rho
+    se = np.sqrt((1 + rho ** 2 / 2) / (n - 3))
+    lo, hi = np.tanh(np.arctanh(rho) + np.array([-1.96, 1.96]) * se)
+    # check: percentile bootstrap over tracts (10,000 resamples)
+    a, b = s["log_rent"].to_numpy(), s[v].to_numpy()
+    boot = []
+    for _ in range(10000):
+        i = rng.integers(0, n, n)
+        boot.append(spearmanr(a[i], b[i])[0])
+    blo, bhi = np.nanpercentile(boot, [2.5, 97.5])
+    cor.append({"factor": v, "label": lab, "n_tracts": n, "spearman_rho": rho, "p": p,
+                "ci_low_fisher_bw": lo, "ci_high_fisher_bw": hi, "ci_low_boot": blo, "ci_high_boot": bhi})
 cor = pd.DataFrame(cor)
 cor.to_csv(RES / "rentcheck_correlations.csv", index=False)
 print("\n" + cor.round(3).to_string(index=False))

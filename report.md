@@ -15,9 +15,10 @@ three labels:
 
 1. **A home's price is set mostly by the home itself and by when it sold.** Size, bathrooms,
    condition and construction quality matter most. A comparable home sold for about **50% more in
-   2025 than in 2016** (not adjusted for inflation).
+   2025 than in 2016**, or about **13% more after inflation**.
 2. **Within a neighborhood, crime, neighborhood income and distance to the T show no measurable
-   price difference.** Three different methods agree. *(Association)*
+   price difference.** Three different methods agree. This says nothing about differences
+   *between* neighborhoods, which the method sets aside. *(Association)*
 3. **Space has become more valuable.** The extra price for each additional square foot rose
    steadily over the decade. *(Association, found by two methods)*
 4. **Being in Cambridge carries a premium.** Comparable homes just across the line in Somerville
@@ -79,7 +80,9 @@ quarter:
 | Condition "excellent" vs "average" | +21% | +17 to +25 |
 | Single-family house vs condo | +13% | +10 to +16 |
 
-- **Prices rose about 50%** for a comparable home between 2016 and 2025 (not adjusted for inflation).
+- **Prices rose about 50%** for a comparable home between 2016 and 2025. After Boston-area
+  inflation (consumer prices rose 33% over the same years), that is about **+13%**. In real terms
+  prices peaked in 2021 (+20%) and have eased since. Source: BLS CPI-U, Boston-Cambridge-Newton.
 - A flexible machine-learning model, which looks for any pattern on its own, ranks the factors
   the same way: **size by far first**, then sale date, bathrooms, condition and quality.
 
@@ -98,9 +101,33 @@ homes in the same neighborhood:
 | Tract median income | +0.3% | −3.3 to +4.2 |
 | Distance to nearest station (510 → 910 m) | −4.0% | −9.3 to +4.4 |
 
-- All four ranges include zero, so these factors add nothing measurable. **This does not mean safety
-  or transit are unimportant.** Their value is already part of **which neighborhood** a home is in.
-  Cambridge is compact, and the differences within a neighborhood are small.
+- All four ranges include zero, so these factors add nothing measurable **within** a neighborhood.
+
+**What this does and does not say.** The model compares each home only with homes in its own
+neighborhood. Differences *between* neighborhoods are set aside: Mid-Cambridge vs The Port, for
+example. So this result **does not show that crime, income or transit don't matter between
+neighborhoods**. Part of their value may be built into which neighborhood a home is in. The data
+cannot separate that from everything else that differs between 12 neighborhoods.
+
+Within neighborhoods these factors vary less than across the city, though not negligibly
+([`within_neighborhood_variation.csv`](results/hedonic/within_neighborhood_variation.csv)):
+
+| Factor | Citywide spread (25th → 75th percentile) | Typical spread within one neighborhood | Range of neighborhood averages | Share of variation within neighborhoods |
+|---|---|---|---|---|
+| Violent crime nearby (reports per km² per year) | 27 | 13 | 5 to 106 | 66% |
+| Property crime nearby (reports per km² per year) | 112 | 50 | 16 to 265 | 41% |
+| Tract median income | \$41,000 | \$18,000 | \$104,000 to \$174,000 | 79% |
+| Distance to nearest station | 400 m | 290 m | 530 m to 2.2 km | 45% |
+
+- **The typical spread inside a neighborhood is about half the citywide spread** for crime and
+  income, and about three-quarters for transit. So the within-neighborhood comparison works with
+  smaller contrasts than the citywide figures suggest.
+- **Some neighborhoods are internally diverse.** That is why a large share of the overall
+  variation lies within neighborhoods: crime near a commercial square vs the quiet streets nearby,
+  or several tracts with different incomes.
+- **Income is the weakest case.** It is measured once per census tract, so within a neighborhood it
+  changes only between its few tracts: 31 tracts in 12 neighborhoods in all. That is too few to
+  measure a small difference precisely.
 - **Transit:** the machine-learning model finds prices roughly flat from 200 m to about 1 km from
   a station, and lower beyond about 1.2 km. Most of those far-away sales are in West Cambridge, so
   distance cannot be separated from other features of that neighborhood. *(Not established)*
@@ -179,11 +206,16 @@ about *where* homes are located, not the city line itself.
 
 - **Why only a check:** no free data give rents for individual apartments. Census median rents
   by tract (31 tracts) were compared with the same factors.
-- **Income:** only neighborhood income lines up with rent (rank correlation +0.55). Part of that
-  link is built in, because renters' incomes are part of tract income.
+- **Income:** only neighborhood income lines up with rent: rank correlation +0.55, 95% range
+  +0.22 to +0.77 (a bootstrap check gives +0.19 to +0.83). With only 31 tracts the range is wide.
+  Part of the link is built in, because renters' incomes are part of tract income.
 - **Crime and transit:** no clear relationship with rent.
 - **Rents and condo prices:** they rank tracts differently (correlation +0.14). Tract median rents
-  mix market, subsidized and student housing, so they are a blunt measure.
+  are a blunt measure for two reasons.
+  - They mix market, subsidized and student housing.
+  - They are rents **paid by all current renters**, including tenants on leases signed years
+    ago, not the rents asked of new tenants today. Long-term tenancies keep them below current
+    market rents and slow to respond to neighborhood changes.
 
 ---
 

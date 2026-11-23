@@ -150,3 +150,12 @@ Every file in this folder is an **unedited** download, made by `analysis/hedonic
 - **Read:** 2026-11-23 in a web browser (the report page said "Data current as of 11/23/2026"), filtered to the five municipalities, fiscal years 2023–2027. **Not a download:** the report cannot be fetched by script, so the values were copied by hand into this CSV, exactly as shown (dollars per $1,000 of assessed value). Empty FY2027 rows (not yet set) were left out.
 - **What it is:** Tax rates by property class. Used only as context in the cross-town table (Phase 4). It does not show residential exemptions, which some of these cities use; those are not captured here.
 - **Terms:** Public government data.
+
+## `manual/bls_cpi_u_boston_annual.csv` (hand-entered)
+
+- **Publisher:** U.S. Bureau of Labor Statistics (BLS)
+- **Dataset:** Consumer Price Index for All Urban Consumers (CPI-U), all items, Boston-Cambridge-Newton, MA-NH, not seasonally adjusted, 1982-84=100; series CUURS11ASA0
+- **URL:** <https://data.bls.gov/timeseries/CUURS11ASA0>
+- **Read:** 2026-11-23 in a web browser, "Annual" column, 2016–2025. The values were copied by hand into this CSV, exactly as shown. The 2024 and 2025 values also match the BLS public API (period M13).
+- **What it is:** Annual-average consumer prices in the Boston area. Used only to convert the 2016→2025 change in comparable-home prices into inflation-adjusted terms (`76_price_change.py`).
+- **Terms:** Public U.S. government data.
