@@ -4,19 +4,6 @@ People moving to Cambridge, Massachusetts for school or work get very different 
 
 **Project website:** [alice-zwang.github.io/cambridge-rent-sources](https://alice-zwang.github.io/cambridge-rent-sources/)
 
-## Companion study: what drives home prices?
-
-A second study in this repository models **Cambridge home sale prices** (8,823 sales,
-2016–2025). It looks at home size and type, crime, neighborhood income, distance to the T, schools
-and time, and compares Cambridge with Somerville, Arlington, Newton and Brookline. It uses only
-free public data.
-
-- **Report for a general audience:** [report.md](report.md)
-- **Plan and methods:** [PLAN.md](PLAN.md)
-- **Code, results and figures:** `analysis/hedonic/`, `results/hedonic/`, `figures/hedonic/`
-
-The rest of this page describes the original rent-sources project.
-
 ![Typical Cambridge rent from seven sources](figures/fig4_sources_all_sizes.png)
 
 ## Key findings
