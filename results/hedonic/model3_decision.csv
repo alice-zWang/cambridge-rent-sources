@@ -1,0 +1,6 @@
+,value
+moran_I_k8,0.21443117388793898
+moran_p_k8,0.001
+robust_LM_error_sig,True
+robust_LM_lag_sig,True
+models_fitted,"error, lag, combo"

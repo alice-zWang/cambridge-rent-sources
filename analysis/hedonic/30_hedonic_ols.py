@@ -28,7 +28,6 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
-import statsmodels.formula.api as smf  # noqa: E402
 from statsmodels.stats.outliers_influence import variance_inflation_factor  # noqa: E402
 
 import sys  # noqa: E402
@@ -36,44 +35,20 @@ import sys  # noqa: E402
 sys.path.insert(0, str(Path(__file__).parent))
 from wildboot import WildClusterBootstrap  # noqa: E402
 
-ROOT = Path(__file__).resolve().parents[2]
-PROC = ROOT / "data" / "processed" / "hedonic"
-RES = ROOT / "results" / "hedonic"
-FIG = ROOT / "figures" / "hedonic"
+from model_common import (CONTROLS, FE, FIG, HEAD, LABEL, PROC, RES, ROOT, fit,  # noqa: E402,F401
+                          formula, load, pct)
+
 RNG = np.random.default_rng(20261122)
 N_BOOT = 9999
 N_MOE = 200
 
-HEAD = ["crime_violent_500", "crime_property_500", "log_income", "transit_km"]
-LABEL = {"crime_violent_500": "Violent crime nearby", "crime_property_500": "Property crime nearby",
-         "log_income": "Tract median income", "transit_km": "Distance to nearest station"}
-CONTROLS = ("C(group, Treatment('condo')) + log_area + bedrooms + fullbaths + halfbaths"
-            " + C(age_group, Treatment('1900-1939')) + C(condition, Treatment('Average'))"
-            " + C(grade, Treatment('Average')) + parking")
-FE = "C(neighborhood) + C(sale_quarter)"
-
-
-def formula(head=HEAD, extra=""):
-    return f"log_price ~ {' + '.join(head)} + {CONTROLS}{extra} + {FE}"
-
-
-def fit(df, f, cluster="tract"):
-    groups = pd.factorize(df[cluster])[0]
-    return smf.ols(f, data=df).fit(cov_type="cluster", cov_kwds={"groups": groups})
-
-
-df_all = pd.read_csv(PROC / "sales_features.csv", parse_dates=["saledate"])
-df = df_all[df_all["model_sample"]].reset_index(drop=True)
+df_all, df = load()
 print(f"model sample: {len(df):,} sales, {df['tract'].nunique()} tracts, "
       f"{df['neighborhood'].nunique()} neighborhoods")
 
 # "typical change" for each headline variable: 25th -> 75th percentile of the model sample
 q = df[HEAD].quantile([0.25, 0.75])
 DELTA = (q.loc[0.75] - q.loc[0.25]).to_dict()
-
-
-def pct(b, d):
-    return 100 * (np.exp(b * d) - 1)
 
 
 # ------------------------------------------------------------------ 1. main model

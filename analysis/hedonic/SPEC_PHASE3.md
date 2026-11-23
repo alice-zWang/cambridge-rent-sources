@@ -74,4 +74,16 @@ at most 0.5 m, with a fixed random seed, and that is reported.
 
 ## Changes after seeing results
 
-*(none yet)*
+- **Spatially filtered OLS with clustered inference** (`40_spatial.py`). `spreg`'s standard errors
+  are not clustered, so the spatial error model was re-estimated as OLS on spatially filtered
+  data (y − λWy on X − λWX, with λ from the GMM model), using Model 1's tract clustering and the
+  neighborhood wild bootstrap. The coefficients match the GMM error model.
+- **Likely deed-restricted sales** (`20_build_features.py`, `45_restricted_check.py`). Model 1
+  residuals revealed 201 sales (76 addresses, mostly condos) whose price and assessed value are
+  both below half the median per sq ft for their home type and year. This is the pattern of
+  deed-restricted affordable homes, which are not market sales. They are flagged, not removed:
+  `model_sample` is unchanged and all pre-specified results use it. Models 1–3 were re-run
+  without them as a robustness check. The 0.5 threshold was chosen after looking at the
+  distribution: a clear low group below about 0.35, then a gap up to about 0.6.
+- Shared model definitions moved to `model_common.py`. Model 1 outputs are byte-identical after
+  the move.

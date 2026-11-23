@@ -218,6 +218,23 @@ all_sales["parking"] = (all_sales[["parking_open", "parking_covered", "parking_g
 all_sales["floor"] = pd.to_numeric(all_sales["exterior_floorlocation"], errors="coerce")
 all_sales["log_land"] = np.log(all_sales["landarea"].where(all_sales["landarea"] > 0))
 
+# ------------------------------------------------------------------ likely deed-restricted sales
+# Added in Phase 3 after seeing Model 1 residuals (not pre-specified): a group of condo sales at
+# about $250/sq ft, whose assessed values are just as low (often one flat value for every unit in a
+# building). This is the pattern of deed-restricted affordable homes, whose resale price is capped,
+# so they are not market sales. The flag needs BOTH a low assessment and a low price, each below
+# half the median per sq ft for the same home type (assessment: same fiscal year; price: same sale
+# year), so a genuine bargain with a normal assessment is not flagged. It does not change
+# model_sample; it is used as a robustness check (45_restricted_check.py).
+RESTRICT_REL = 0.5
+a_ppsf = all_sales["assessedvalue"] / all_sales["interior_livingarea"]
+all_sales["rel_assessed_ppsf"] = a_ppsf / a_ppsf.groupby(
+    [all_sales["group"], all_sales["yearofassessment"]]).transform("median")
+all_sales["rel_price_ppsf"] = all_sales["price_per_sqft"] / all_sales.groupby(
+    ["group", "sale_year"])["price_per_sqft"].transform("median")
+all_sales["flag_restricted_likely"] = ((all_sales["rel_assessed_ppsf"] < RESTRICT_REL)
+                                       & (all_sales["rel_price_ppsf"] < RESTRICT_REL))
+
 # ------------------------------------------------------------------ sample accounting + write
 keep_cols = ["neighborhood", "tract", "log_income"]
 for flagged in (False, True):
@@ -253,3 +270,5 @@ print(m[["crime_violent_500", "crime_property_500", "income", "transit_km",
          "transit_km_allstations"]].describe().round(2).to_string())
 print(m["nearest_station"].value_counts().to_string())
 print(m["age_group"].value_counts().to_string())
+print(f"likely deed-restricted (flag only): {int(m['flag_restricted_likely'].sum())} sales at "
+      f"{m.loc[m['flag_restricted_likely'], 'address'].nunique()} addresses")

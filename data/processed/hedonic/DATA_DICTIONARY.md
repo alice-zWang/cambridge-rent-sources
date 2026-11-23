@@ -45,3 +45,25 @@ Built by `analysis/hedonic/10_clean_sales.py` from the Cambridge Property Databa
 | `flag_ppsf_extreme` | TRUE if price per sq ft is in the bottom/top 0.5% of its group | 9,236 |
 | `flag_bedrooms_missing` | TRUE if bedroom count is missing | 9,236 |
 | `main_sample` | TRUE unless flag_low_ratio or flag_multi_parcel (main analysis sample) | 9,236 |
+
+# Added columns: `sales_features.csv`
+
+Built by `analysis/hedonic/20_build_features.py`. Same rows as `sales_clean.csv` plus the columns below. Rules: `analysis/hedonic/SPEC_MODEL1.md`.
+
+| Column | Meaning |
+|---|---|
+| `neighborhood` | Cambridge neighborhood (point in polygon) |
+| `tract` | 2020 census tract GEOID |
+| `income`, `income_moe`, `log_income` | ACS 2020–2024 tract median household income, its 90% margin of error, and its log |
+| `crime_violent_{300,500,800}` | Violent crime reports with reporting-area centre within the radius, 3 calendar years before the sale year, per km² per year, divided by 100 |
+| `crime_property_{300,500,800}` | Same, for property crime against residents |
+| `crime_*_500_nosq` | 500 m measures without reporting areas within 300 m of a Red Line station in Cambridge |
+| `transit_km`, `nearest_station` | Distance (km) to and name of the nearest rapid-transit station north of the Charles that was open on the sale date |
+| `transit_km_allstations` | Same, among all MBTA rapid-transit stations |
+| `transit_band` | `transit_km` in bands: <400 m, 400–800 m, 800–1,200 m, >1,200 m |
+| `age_group`, `condition`, `grade` | Grouped year built, overall condition and construction grade (see spec) |
+| `log_area`, `bedrooms`, `fullbaths`, `halfbaths`, `parking`, `floor`, `log_land` | Tidy home features (capped as in the spec) |
+| `rel_assessed_ppsf`, `rel_price_ppsf` | Assessed value per sq ft, and price per sq ft, relative to the median for the same home type and year |
+| `flag_restricted_likely` | TRUE if both relative values are below 0.5 (likely deed-restricted; Phase 3, robustness only) |
+| `model_sample` | TRUE if in the Model 1 sample (main sample with all features) |
+| `robust_sample` | TRUE if all features are present (including flagged sales) |
