@@ -1,4 +1,5 @@
-"""Download Census ACS 1-year median gross rent by bedrooms (table B25031) for
+"""Download Census ACS 1-year median gross rent by bedrooms (table B25031) and by
+year moved in (table B25113) for
 Cambridge city, MA, and write data/raw/census_acs1_gross_rent_by_bedroom.csv.
 
 Needs a free API key (https://api.census.gov/data/key_signup.html), set as an
@@ -53,3 +54,20 @@ with open(RAW / "census_acs1_gross_rent_by_bedroom.csv", "w", newline="") as f:
     w = csv.DictWriter(f, fieldnames=list(out[0].keys()))
     w.writeheader()
     w.writerows(out)
+
+# --- Table B25113: median gross rent by year householder moved in ---------------
+# B25113_001 = all renters; B25113_002 = most recent move-in group (its label changes by year).
+moved = []
+for year in YEARS:
+    d = get(year, ["B25113_001E", "B25113_002E", "B25113_002M"])
+    url = f"https://api.census.gov/data/{year}/acs/acs1/variables/B25113_002E.json?key={KEY}"
+    with urllib.request.urlopen(url, timeout=60) as r:
+        label = json.load(r)["label"].split("!!")[-1]
+    moved.append({"year": year, "all_renters_median_gross_rent": d["B25113_001E"],
+                  "recent_movers_median_gross_rent": d["B25113_002E"], "recent_movers_moe": d["B25113_002M"],
+                  "recent_movers_definition": label.lower()})
+    print(year, moved[-1])
+with open(RAW / "census_acs1_rent_by_year_moved.csv", "w", newline="") as f:
+    w = csv.DictWriter(f, fieldnames=list(moved[0].keys()))
+    w.writeheader()
+    w.writerows(moved)

@@ -31,6 +31,9 @@ Notes: FMRs are 40th-percentile gross rents (including utilities) across about 1
 U.S. Census Bureau, American Community Survey 1-year estimates, table B25031 (median gross rent by bedrooms), Cambridge city, MA (state 25, place 11000), 2015–2024. Downloaded Nov 21, 2026 with `analysis/00_fetch_census.py`.
 Gross rent is contract rent plus utilities, for **all** renter households (not just new leases). `_moe` columns are 90% margins of error. There is no standard 2020 1-year release. The 2024 3-bedroom value ($3,501) is the Census top code meaning "$3,500 or more", and Census returned no margin of error for it.
 
+### `census_acs1_rent_by_year_moved.csv`
+U.S. Census Bureau, ACS 1-year estimates, table B25113 (median gross rent by year householder moved into unit), Cambridge city, MA, 2015–2024. Downloaded Nov 23, 2026. `recent_movers` is the table's most recent move-in group, whose definition is in `recent_movers_definition` (for example, "moved in 2021 or later" in the 2023 survey). All apartment sizes combined; `_moe` is the 90% margin of error.
+
 ## processed/
 
 ### `city_vs_hud.csv`

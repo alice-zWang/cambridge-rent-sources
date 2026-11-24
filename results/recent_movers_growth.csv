@@ -1,0 +1,5 @@
+series,first,last,total_change_pct,annual_growth_pct,ci_low,ci_high,gap_vs_recent_movers_pct_per_year,gap_p_value
+Census: recent movers (all sizes),2352,3013,28.1,2.79,1.42,4.19,,
+Census: all renters (all sizes),1871,2746,46.8,4.27,2.69,5.88,,
+City asking rent: 1-bedroom,2400,2500,4.2,1.0,0.03,1.98,-1.76,0.035
+City asking rent: 2-bedroom,2750,3000,9.1,1.73,0.06,3.42,-1.04,0.2131
