@@ -3,7 +3,7 @@ message: "If you use this work, please cite it as below."
 title: "Cambridge Rent: How Much Do Sources Disagree?"
 authors:
   - family-names: Wang
-    given-names: Zhaohan (Alice)
+    given-names: Alice
 date-released: 2026-11-21
 url: "https://github.com/alice-zWang/cambridge-rent-sources"
 license: MIT

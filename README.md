@@ -91,7 +91,7 @@ Full details and collection dates are in [data/README.md](data/README.md).
 
 ## Author
 
-**Zhaohan (Alice) Wang**, Cambridge, MA. Independent research project, 2026.
+**Alice Wang**, Cambridge, MA. Independent research project, 2026.
 
 AI tools (Claude) were used to help collect public data, write analysis code and draft documentation. All figures can be checked against the sources listed above and rebuilt with the included scripts.
 
