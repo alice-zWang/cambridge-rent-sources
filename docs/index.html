@@ -231,6 +231,7 @@
     <a href="#asked-paid">Asked vs. paid</a>
     <a href="#trend">Trend</a>
     <a href="#methods">Methods</a>
+    <a href="#home-prices">Home prices</a>
     <a href="#about">About</a>
     <button class="theme-toggle" type="button" aria-label="Switch to light mode">Light</button>
   </div>
@@ -415,6 +416,41 @@ python analysis/run_all.py</code></pre>
       <li>The Census "recent movers" window changes from year to year and mixes apartment sizes.</li>
       <li>No neighborhood-level rents or studio data from the city yet.</li>
     </ul>
+    </div>
+  </div>
+</section>
+
+<section id="home-prices">
+  <div class="wrap">
+    <div class="rail">
+    <p class="kicker">Companion study</p>
+    <h2>What drives home prices in Cambridge?</h2>
+    </div>
+    <div class="body">
+    <p>A second study in this repository models Cambridge home sale prices: 8,823 sales from 2016 to 2025. It looks at home size and type, crime, neighborhood income, distance to the T, schools and time, and compares Cambridge with Somerville, Arlington, Newton and Brookline. It uses only free public data, and its rules were written down before the models were run.</p>
+    <div class="stats">
+      <div class="stat"><div class="num">+50%</div><p>How much more a comparable home sold for in 2025 than in 2016; about 13% more after inflation.</p></div>
+      <div class="stat"><div class="num">+17%</div><p>Price premium for Cambridge homes just across the city line from similar Somerville homes (cautious range 6% to 28%).</p></div>
+    </div>
+    <ul class="clean">
+      <li><b>The home itself and time explain most of the price:</b> size, bathrooms, condition and construction quality matter most.</li>
+      <li><b>Within a neighborhood,</b> crime, neighborhood income and distance to the T show no measurable price difference. This says nothing about differences between neighborhoods.</li>
+      <li><b>Space has become more valuable:</b> the extra price for each additional square foot rose steadily over the decade.</li>
+      <li><b>Schools:</b> whether they raise home prices cannot be answered with these data, because Cambridge and Somerville use school choice, not neighborhood zones.</li>
+    </ul>
+    <figure>
+      <img src="assets/fig_h18_boundary_jump.png" alt="Chart of adjusted home prices by distance from the Cambridge–Somerville line: Somerville-side points sit near 0, Cambridge-side points near +17, with a jump at the line." loading="lazy">
+      <figcaption>Similar homes within 250 m of the Cambridge–Somerville line, compared on the same stretch of the line and in the same sale quarter. Cambridge's lower property tax rate alone could explain 8–11%, so the data cannot show that anything beyond taxes is priced in.</figcaption>
+    </figure>
+    <p>All numbers are associations unless labeled otherwise in the report: they describe how prices differ between similar homes, not what a policy change would do.</p>
+    <div class="cards">
+      <a class="card" data-gh="report.md" href="../report.md"><h3>Full report</h3><p>All six findings in plain language, with how sure each one is and what it cannot say.</p></a>
+      <a class="card" data-gh="PLAN.md" href="../PLAN.md"><h3>Plan and methods</h3><p>The research plan: questions, data, models and safeguards.</p></a>
+      <a class="card" data-gh="results/hedonic" href="../results/hedonic/"><h3>Phase summaries and results</h3><p>Plain-language summaries of each phase, with the result tables.</p></a>
+      <a class="card" data-gh="analysis/hedonic" href="../analysis/hedonic/"><h3>Code and pre-registered rules</h3><p>Python scripts in run order, and the rules fixed before each phase was run.</p></a>
+      <a class="card" data-gh="data/raw/hedonic/SOURCES.md" href="../data/raw/hedonic/SOURCES.md"><h3>Data sources</h3><p>Where every dataset came from, when it was downloaded, and checksums.</p></a>
+      <a class="card" data-gh="figures/hedonic" href="../figures/hedonic/"><h3>Figures</h3><p>Every chart from the study, as PNG and PDF.</p></a>
+    </div>
     </div>
   </div>
 </section>
