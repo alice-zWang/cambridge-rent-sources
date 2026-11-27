@@ -5,7 +5,7 @@ The current phase uses only public, non-identifiable data. Items marked **(peopl
 ## 1. Informed consent (people)
 
 - [ ] Consent form in plain language a non-expert can follow
-- [ ] States who the researcher is (a high school student) and names the adult supervisor
+- [ ] States who the researcher is and names the adult supervisor
 - [ ] Explains the purpose, what participants will do and how long it takes
 - [ ] Says participation is voluntary: people can skip questions or stop at any time with no penalty
 - [ ] Explains what data is collected, where it is stored, who sees it and when it is deleted
