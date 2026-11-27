@@ -3,7 +3,8 @@
 WHAT THIS DOES (plain words)
   The city publishes one "snapshot" of every property per fiscal year (FY2016-FY2027). Each
   snapshot lists the property's features and its most recent sale. This script:
-    1. removes owner names and mailing addresses (not needed; kept out of the repository);
+    1. removes owner names and mailing addresses, and (in the published file) street addresses and unit
+       numbers, so the repository does not list who sold which home (not needed for any model);
     2. collects every sale that appears in any snapshot and removes duplicates;
     3. takes each home's features from the FIRST snapshot that shows the sale (closest after
        the sale), so the features describe the home as sold as closely as possible;
@@ -164,7 +165,8 @@ log.append(dict(step=len(log) + 1, name="main_sample",
 s["sale_year"] = s["saledate"].dt.year
 s["sale_quarter"] = s["saledate"].dt.to_period("Q").astype(str)
 s["log_price"] = s["saleprice"].apply(lambda v: __import__("math").log(v))
-keep = ["pid", "address", "unit", "latitude", "longitude", "propertyclass", "group",
+# Street address and unit number are left out of the published file (privacy; no model uses them).
+keep = ["pid", "latitude", "longitude", "propertyclass", "group",
         "saledate", "sale_year", "sale_quarter", "saleprice", "log_price", "price_per_sqft",
         "book_page", "yearofassessment", "assessedvalue", "interior_livingarea",
         "interior_bedrooms", "interior_fullbaths", "interior_halfbaths", "interior_totalrooms",
@@ -182,7 +184,6 @@ pd.DataFrame(log).to_csv(RES / "cleaning_log.csv", index=False)
 
 DESCRIPTIONS = {
     "pid": "Cambridge parcel ID (condo units have their own ID)",
-    "address": "Street address", "unit": "Unit number (condos)",
     "latitude": "Latitude (WGS84)", "longitude": "Longitude (WGS84)",
     "propertyclass": "Assessor property class, as published",
     "group": "Analysis group: condo, condo_lux, single_family (incl. with auxiliary apartment), "
@@ -215,11 +216,15 @@ DESCRIPTIONS = {
 }
 dd = ["# Data dictionary: `sales_clean.csv`", "",
       "Built by `analysis/hedonic/10_clean_sales.py` from the Cambridge Property Database "
-      "(see `data/raw/hedonic/SOURCES.md`). One row per market sale. Owner names and addresses "
-      "were removed. Cleaning steps and row counts: `results/hedonic/cleaning_log.csv`.", "",
+      "(see `data/raw/hedonic/SOURCES.md`). One row per market sale. Owner names, mailing addresses, "
+      "street addresses and unit numbers are removed. Cleaning steps and row counts: `results/hedonic/cleaning_log.csv`.", "",
       "| Column | Meaning | Non-missing |", "|---|---|---|"]
 for c in s.columns:
     dd.append(f"| `{c}` | {DESCRIPTIONS.get(c, '')} | {int(s[c].notna().sum()):,} |")
-(OUT / "DATA_DICTIONARY.md").write_text("\n".join(dd) + "\n")
+# Replace only this section; keep the sections other scripts document below it.
+dd_path = OUT / "DATA_DICTIONARY.md"
+old = dd_path.read_text() if dd_path.exists() else ""
+tail = old[old.index("\n# ", 1):] if "\n# " in old[1:] else ""
+dd_path.write_text("\n".join(dd) + "\n" + tail)
 print(f"\nwrote {len(s):,} sales ({int(s['main_sample'].sum()):,} in main sample) "
       f"-> data/processed/hedonic/sales_clean.csv")

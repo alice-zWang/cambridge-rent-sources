@@ -1,12 +1,10 @@
 # Data dictionary: `sales_clean.csv`
 
-Built by `analysis/hedonic/10_clean_sales.py` from the Cambridge Property Database (see `data/raw/hedonic/SOURCES.md`). One row per market sale. Owner names and addresses were removed. Cleaning steps and row counts: `results/hedonic/cleaning_log.csv`.
+Built by `analysis/hedonic/10_clean_sales.py` from the Cambridge Property Database (see `data/raw/hedonic/SOURCES.md`). One row per market sale. Owner names, mailing addresses, street addresses and unit numbers are removed. Cleaning steps and row counts: `results/hedonic/cleaning_log.csv`.
 
 | Column | Meaning | Non-missing |
 |---|---|---|
 | `pid` | Cambridge parcel ID (condo units have their own ID) | 9,236 |
-| `address` | Street address | 9,236 |
-| `unit` | Unit number (condos) | 7,054 |
 | `latitude` | Latitude (WGS84) | 9,236 |
 | `longitude` | Longitude (WGS84) | 9,236 |
 | `propertyclass` | Assessor property class, as published | 9,236 |

@@ -278,4 +278,4 @@ print(m[["crime_violent_500", "crime_property_500", "income", "transit_km",
 print(m["nearest_station"].value_counts().to_string())
 print(m["age_group"].value_counts().to_string())
 print(f"likely deed-restricted (flag only): {int(m['flag_restricted_likely'].sum())} sales at "
-      f"{m.loc[m['flag_restricted_likely'], 'address'].nunique()} addresses")
+      f"{m.loc[m['flag_restricted_likely']].groupby(['latitude', 'longitude']).ngroups} locations")
