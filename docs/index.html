@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#161514">
+<meta name="theme-color" content="#0d0f0e">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://alice-zwang.github.io/cambridge-rent-sources/">
 <meta property="og:type" content="article">
@@ -13,156 +13,209 @@
 <meta property="og:image" content="https://alice-zwang.github.io/cambridge-rent-sources/assets/fig4_sources_all_sizes.png">
 <meta property="og:image:alt" content="Dot chart of typical monthly Cambridge rent from seven sources, $2,742 to $3,707.">
 <meta name="twitter:card" content="summary_large_image">
-<script>try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+<script>(function () { var r = document.documentElement;
+  try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") r.setAttribute("data-theme", t); } catch (e) {}
+  // Scroll-in motion starts hidden before the first paint (no flash); skipped without IntersectionObserver or with reduced motion.
+  if ("IntersectionObserver" in window && !(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) { r.classList.add("motion");
+    setTimeout(function () { if (!r.hasAttribute("data-motion-ready")) r.classList.remove("motion"); }, 4000); }
+})();</script>
 <title>Cambridge Rent: How Much Do Sources Disagree?</title>
 <meta name="description" content="A comparison of public rent sources for Cambridge, MA: how far apart they are and why. Independent research by Alice Wang.">
 <style>
-  /* Editorial layout: one reading column, wider figures, hairline rules, one accent colour.
-     Dark is the default; [data-theme="light"] is the opt-in alternative. */
+  /* Editorial grid: a pinned left rail with each section's label and title, a wide content column.
+     Near-black with one lime accent; dark is the default, [data-theme="light"] is the alternative. */
   :root {
     color-scheme: dark;
-    --bg: #161514; --text: #e9e5dd; --muted: #a8a399; --rule: #34312d; --rule-strong: #57524b;
-    --accent: #f0874f; --link: #f2c4a6; --code-bg: #1f1d1b; --mark: rgba(240, 135, 79, 0.18);
-    --chart-filter: invert(0.915) hue-rotate(180deg);
-    --serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+    --bg: #0d0f0e; --bg-alt: #121513; --text: #e9ece6; --muted: #9aa197; --faint: #6c7369;
+    --rule: #242825; --rule-strong: #3d433e;
+    --accent: #c5f24a; --link: #d6f68a; --code-bg: #151916; --mark: rgba(197, 242, 74, 0.22);
+    --data-blue: #5a9fe6; --data-orange: #f0874f;
+    --chart-filter: invert(0.945) hue-rotate(180deg);
     --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    --col: 680px; --wide: 980px;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+    --max: 1180px; --rail: 250px; --gap: 64px; --measure: 660px;
   }
   :root[data-theme="light"] {
     color-scheme: light;
-    --bg: #fbfaf6; --text: #1d1b18; --muted: #5f5a52; --rule: #dedad2; --rule-strong: #a9a398;
-    --accent: #c1501d; --link: #8f3a12; --code-bg: #f1eee7; --mark: rgba(193, 80, 29, 0.12);
+    --bg: #fafbf7; --bg-alt: #f2f4ee; --text: #161915; --muted: #575e55; --faint: #7d847a;
+    --rule: #dfe3da; --rule-strong: #b4baaf;
+    --accent: #4f7a0a; --link: #3d6106; --code-bg: #eef1e9; --mark: rgba(132, 204, 22, 0.3);
+    --data-blue: #2f74c6; --data-orange: #c9561f;
     --chart-filter: none;
   }
   * { box-sizing: border-box; }
-  html { background: var(--bg); scroll-padding-top: 64px; }
-  body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--serif); font-size: 19px;
-         line-height: 1.6; -webkit-text-size-adjust: 100%; }
+  html { background: var(--bg); scroll-padding-top: 72px; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 17.5px; line-height: 1.65;
+         -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; }
   ::selection { background: var(--mark); }
-  a { color: var(--link); text-decoration-color: var(--rule-strong); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+  a { color: var(--link); text-decoration-color: var(--rule-strong); text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
   a:hover { color: var(--accent); text-decoration-color: currentColor; }
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .wrap { max-width: var(--col); margin: 0 auto; padding: 0 20px; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 32px; }
 
-  /* top bar */
-  nav { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--rule);
-        font-family: var(--sans); font-size: 14px; }
-  nav .wrap { max-width: var(--wide); display: flex; align-items: center; gap: 22px; height: 48px;
-              overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+  /* ---------- top bar ---------- */
+  nav { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--rule); font-size: 13.5px; }
+  nav .wrap { display: flex; align-items: center; gap: 24px; height: 52px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
   nav .wrap::-webkit-scrollbar { display: none; }
-  nav a { color: var(--muted); text-decoration: none; padding: 13px 0 12px; border-bottom: 2px solid transparent; }
+  nav a { color: var(--muted); text-decoration: none; padding: 15px 0 14px; border-bottom: 2px solid transparent; }
   nav a:hover { color: var(--text); }
-  nav a.brand { color: var(--text); font-weight: 600; margin-right: auto; }
+  nav a.brand { color: var(--text); font-weight: 650; margin-right: auto; display: inline-flex; align-items: center; gap: 9px; }
+  nav a.brand::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); flex: none; }
   nav a.active { color: var(--text); border-bottom-color: var(--accent); }
-  .theme-toggle { font: inherit; color: var(--muted); background: none; border: 1px solid var(--rule); border-radius: 3px;
-                  padding: 3px 9px; cursor: pointer; position: sticky; right: 0; background: var(--bg);
-                  box-shadow: -12px 0 10px -2px var(--bg); }
-  .theme-toggle:hover { color: var(--text); border-color: var(--rule-strong); }
+  .theme-toggle { font: 500 12.5px/1 var(--mono); color: var(--muted); background: var(--bg); border: 1px solid var(--rule-strong);
+                  border-radius: 4px; padding: 6px 9px; cursor: pointer; position: sticky; right: 0; box-shadow: -14px 0 10px -2px var(--bg); }
+  .theme-toggle:hover { color: var(--text); border-color: var(--text); }
+  .progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; background: var(--accent);
+              transform-origin: 0 50%; transform: scaleX(0); }
 
-  /* article header */
-  header.hero { padding: 64px 0 8px; }
-  .eyebrow { font-family: var(--sans); font-size: 13px; color: var(--accent); margin: 0 0 14px; font-weight: 600; }
-  h1 { font-family: var(--serif); font-weight: 700; font-size: clamp(34px, 5.4vw, 50px); line-height: 1.1;
-       letter-spacing: -0.01em; margin: 0 0 18px; }
-  .lede { font-size: 22px; line-height: 1.45; color: var(--text); margin: 0 0 22px; }
-  .byline { font-family: var(--sans); font-size: 14px; color: var(--muted); margin: 0; padding-top: 14px;
-            border-top: 1px solid var(--rule); }
-  .btns { font-family: var(--sans); font-size: 14px; margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  /* ---------- hero ---------- */
+  header.hero { padding: 76px 0 72px; border-bottom: 1px solid var(--rule); }
+  header.hero > .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: var(--gap);
+    grid-template-areas: "eyebrow eyebrow" "title title" "lede chart" "byline chart" "links chart" ". chart"; }
+  .hero-text { display: contents; }
+  .eyebrow { grid-area: eyebrow; font: 500 12.5px/1.4 var(--mono); letter-spacing: 0.02em; color: var(--accent); margin: 0 0 22px; }
+  h1 { grid-area: title; font-weight: 750; font-size: clamp(40px, 7.4vw, 92px); line-height: 0.98; letter-spacing: -0.045em;
+       margin: 0 0 44px; max-width: 15ch; text-wrap: balance; }
+  .lede { grid-area: lede; font-size: 20px; line-height: 1.5; color: var(--text); margin: 0 0 26px; }
+  .byline { grid-area: byline; font: 500 12.5px/1.5 var(--mono); color: var(--muted); margin: 0; padding-top: 14px; border-top: 1px solid var(--rule); }
+  .btns { grid-area: links; display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 10px; font-size: 14.5px; }
   .btn { color: var(--link); }
   .btn-primary::after { content: " ↓"; }
   .btn-ghost::after { content: " ↗"; }
 
-  /* lead graphic (hand-made SVG from the figures on this page) */
-  figure.range { max-width: 560px; margin: 36px 0 0; }
-  .range .range-title { font-family: var(--sans); font-size: 15px; font-weight: 600; margin: 0 0 4px; color: var(--text); }
+  figure.range { grid-area: chart; align-self: start; margin: 4px 0 0; padding: 22px 24px 18px; border: 1px solid var(--rule); border-radius: 6px;
+                 background: var(--bg-alt); }
+  .range .range-title { font: 500 12.5px/1.4 var(--mono); color: var(--muted); margin: 0 0 6px; }
   .range svg { width: 100%; height: auto; display: block; overflow: visible; font-family: var(--sans); }
   .range .lab { fill: var(--text); font-size: 13px; }
   .range .val { fill: var(--text); font-size: 12.5px; font-variant-numeric: tabular-nums; }
-  .range .tick { fill: var(--muted); font-size: 11.5px; }
-  .range .track { stroke: var(--rule); stroke-width: 1; }
-  .range .dot { fill: #5a9fe6; }
-  .range .dot.census { fill: var(--accent); }
-  .range .bracket path { fill: none; stroke: var(--muted); stroke-width: 1; }
-  .range .bracket text { fill: var(--text); font-size: 13px; font-weight: 600; }
+  .range .tick { fill: var(--faint); font: 11px var(--mono); }
+  .range .track { stroke: var(--rule-strong); stroke-width: 1; stroke-dasharray: 1 3; }
+  .range .dot { fill: var(--data-blue); }
+  .range .dot.census { fill: var(--data-orange); }
+  .range .bracket path { fill: none; stroke: var(--accent); stroke-width: 1.25; }
+  .range .bracket text { fill: var(--accent); font-size: 13px; font-weight: 650; }
 
-  /* sections */
-  section { padding: 56px 0 8px; }
-  section + section > .wrap { border-top: 1px solid var(--rule); padding-top: 48px; }
-  #findings { padding-top: 48px; }
-  .kicker { font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--accent); margin: 0 0 8px; }
-  h2 { font-family: var(--serif); font-weight: 700; font-size: clamp(27px, 3.6vw, 34px); line-height: 1.18; margin: 0 0 18px; }
-  h3 { font-family: var(--sans); font-size: 17px; font-weight: 650; line-height: 1.35; margin: 0 0 6px; }
+  /* ---------- sections: pinned rail + content column ---------- */
+  section { padding: 88px 0; border-bottom: 1px solid var(--rule); counter-increment: section; }
+  body { counter-reset: section fig; }
+  section > .wrap { display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); column-gap: var(--gap); align-items: start; }
+  .rail { position: sticky; top: 84px; }
+  .rail::before { content: counter(section, decimal-leading-zero); display: block; font: 500 12.5px/1 var(--mono); color: var(--faint);
+                  margin-bottom: 14px; }
+  .kicker { font: 500 12.5px/1.4 var(--mono); letter-spacing: 0.02em; color: var(--accent); margin: 0 0 10px; }
+  h2 { font-weight: 720; font-size: clamp(26px, 2.6vw, 33px); line-height: 1.12; letter-spacing: -0.03em; margin: 0; text-wrap: balance; }
+  .body { min-width: 0; }
+  .body > p, .body > ul.clean, .body > h3, .reasons, .stats { max-width: var(--measure); }
+  h3 { font-size: 18px; font-weight: 680; line-height: 1.35; letter-spacing: -0.01em; margin: 0 0 8px; }
+  .body > h3 { margin-top: 44px !important; }
   p { margin: 0 0 18px; }
-  b { font-weight: 700; }
+  b { font-weight: 680; color: var(--text); }
   sub { line-height: 0; }
 
-  /* key numbers: a plain strip, no boxes */
-  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; margin: 8px 0 8px; border-top: 2px solid var(--text); }
-  .stat { padding: 14px 0 18px; border-bottom: 1px solid var(--rule); }
-  .stat .num { font-family: var(--serif); font-size: 30px; font-weight: 700; line-height: 1.15; margin: 0 0 4px;
-               font-variant-numeric: lining-nums tabular-nums; }
-  .stat p { font-family: var(--sans); font-size: 15px; line-height: 1.45; color: var(--muted); margin: 0; }
+  /* key numbers */
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; margin: 0; max-width: none !important; }
+  .stat { padding: 18px 0 30px; border-top: 1px solid var(--rule-strong); container-type: inline-size; }
+  .stat .num { display: inline-block; white-space: nowrap; font-weight: 750; font-size: clamp(30px, 3.6vw, 48px);
+               font-size: clamp(30px, 13cqi, 56px); line-height: 1; letter-spacing: -0.04em;
+               color: var(--accent); margin: 0 0 12px; font-variant-numeric: tabular-nums;
+               background: linear-gradient(var(--mark), var(--mark)) no-repeat 0 92% / 100% 0.28em; }
+  .stat p { font-size: 15px; line-height: 1.5; color: var(--muted); margin: 0; max-width: 34ch; }
 
-  /* figures: wider than the text column, no frames */
-  figure { margin: 28px 0 32px; }
-  section figure:not(.range) { margin-left: calc((var(--col) - min(var(--wide), 100vw - 40px)) / 2);
-                               margin-right: calc((var(--col) - min(var(--wide), 100vw - 40px)) / 2); }
+  /* figures: numbered, captioned */
+  .body figure { margin: 34px 0 38px; counter-increment: fig; }
   figure img { display: block; width: 100%; height: auto; filter: var(--chart-filter); }
-  figcaption { font-family: var(--sans); font-size: 14px; line-height: 1.5; color: var(--muted); margin-top: 10px;
-               max-width: var(--col); }
-  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
-         margin-left: calc((var(--col) - min(var(--wide), 100vw - 40px)) / 2);
-         margin-right: calc((var(--col) - min(var(--wide), 100vw - 40px)) / 2); }
-  .two figure { margin: 24px 0 8px !important; }
+  figcaption { font-size: 14px; line-height: 1.55; color: var(--muted); margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--rule);
+               max-width: var(--measure); }
+  .body figure figcaption::before { content: "Fig. " counter(fig); font: 600 12px/1 var(--mono); color: var(--accent); margin-right: 10px; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin: 30px 0 0; }
+  .two figure { margin: 0 !important; }
 
-  /* why sources differ: run-in list */
-  .reasons { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 32px; margin: 8px 0 36px; }
-  .reason { padding: 12px 0; border-top: 1px solid var(--rule); }
-  .reason h3 { margin-bottom: 2px; }
-  .reason p { font-size: 16.5px; line-height: 1.5; color: var(--muted); margin: 0; }
+  /* why sources differ */
+  .reasons { display: grid; grid-template-columns: 1fr 1fr; gap: 0 36px; margin: 8px 0 8px; }
+  .reason { padding: 16px 0 18px; border-top: 1px solid var(--rule); }
+  .reason h3 { font-size: 16px; margin-bottom: 4px; }
+  .reason p { font-size: 15px; line-height: 1.55; color: var(--muted); margin: 0; }
 
   /* table */
-  .tablebox { overflow-x: auto; margin: 4px 0 8px; }
-  table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: 15px; font-variant-numeric: tabular-nums; }
-  th, td { padding: 8px 10px 8px 0; text-align: left; border-bottom: 1px solid var(--rule); vertical-align: top; white-space: nowrap; }
-  thead th { font-weight: 600; border-top: 2px solid var(--text); border-bottom: 1px solid var(--rule-strong); }
-  td.r, th.r { text-align: right; padding-left: 14px; padding-right: 0; }
+  .tablebox { overflow-x: auto; margin: 6px 0 10px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; font-variant-numeric: tabular-nums; }
+  th, td { padding: 10px 12px 10px 0; text-align: left; border-bottom: 1px solid var(--rule); vertical-align: top; white-space: nowrap; }
+  thead th { font: 500 12px/1.4 var(--mono); color: var(--muted); border-bottom: 1px solid var(--rule-strong); }
+  td.r, th.r { text-align: right; padding-left: 16px; padding-right: 0; }
+  tbody td:first-child { font-weight: 600; }
 
-  /* methods: a plain annotated list of links */
-  .cards { margin: 4px 0 28px; border-top: 1px solid var(--rule); }
-  .card { display: grid; grid-template-columns: 210px 1fr; gap: 4px 24px; padding: 11px 0; border-bottom: 1px solid var(--rule);
-          text-decoration: none; color: var(--text); }
-  .card h3 { margin: 0; color: var(--link); font-size: 16px; }
-  .card:hover h3 { color: var(--accent); text-decoration: underline; text-underline-offset: 0.18em; }
-  .card p { font-family: var(--sans); font-size: 15px; line-height: 1.45; color: var(--muted); margin: 0; }
+  /* methods index */
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 0 36px; margin: 10px 0 34px; }
+  .card { display: block; padding: 16px 0 18px; border-top: 1px solid var(--rule); text-decoration: none; color: var(--text); }
+  .card h3 { font-size: 16px; margin: 0 0 4px; color: var(--text); }
+  .card h3::after { content: " →"; color: var(--accent); }
+  .card:hover h3 { color: var(--accent); }
+  .card p { font-size: 14.5px; line-height: 1.5; color: var(--muted); margin: 0; }
 
-  ul.clean { margin: 0 0 18px; padding-left: 1.2em; }
-  ul.clean li { margin-bottom: 6px; }
-  details { margin: 8px 0 24px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 10px 0; }
-  summary { cursor: pointer; font-family: var(--sans); font-size: 15px; font-weight: 600; }
-  details[open] summary { margin-bottom: 4px; }
-  details figure { margin: 16px 0 !important; }
-  code { font-family: var(--mono); font-size: 0.82em; }
-  pre { background: var(--code-bg); padding: 14px 16px; overflow-x: auto; font-size: 15px; line-height: 1.5; border-left: 2px solid var(--accent); }
+  ul.clean { margin: 0 0 18px; padding-left: 1.15em; }
+  ul.clean li { margin-bottom: 7px; }
+  ul.clean li::marker { color: var(--faint); }
+  details { margin: 10px 0 24px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 12px 0; max-width: var(--measure); }
+  summary { cursor: pointer; font-size: 15px; font-weight: 600; }
+  summary::marker { color: var(--accent); }
+  details figure { margin: 18px 0 !important; }
+  code { font-family: var(--mono); font-size: 0.85em; }
+  pre { background: var(--code-bg); padding: 16px 18px; overflow-x: auto; font-size: 14px; line-height: 1.6; border: 1px solid var(--rule);
+        border-radius: 6px; max-width: var(--measure); }
   pre code { font-size: 1em; }
 
-  footer { margin-top: 56px; padding: 20px 0 48px; border-top: 1px solid var(--rule); font-family: var(--sans);
-           font-size: 13.5px; color: var(--muted); }
-  footer p { margin: 0; }
+  /* ---------- footer ---------- */
+  footer { padding: 48px 0 64px; font-size: 13.5px; color: var(--muted); }
+  footer .wrap { display: grid; grid-template-columns: var(--rail) minmax(0, 1fr) auto; column-gap: var(--gap); align-items: start; }
+  footer .ft-brand { color: var(--text); font-weight: 650; display: inline-flex; align-items: center; gap: 9px; margin: 0; }
+  footer .ft-brand::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
+  footer p { margin: 0; max-width: var(--measure); }
+  footer .ft-links { display: flex; flex-direction: column; gap: 4px; text-align: right; font-size: 13.5px; }
 
-  @media (max-width: 1020px) {
-    section figure:not(.range), .two { margin-left: 0; margin-right: 0; }
+  /* ---------- scroll-in motion (only when the script runs and motion is allowed) ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    .motion :is(.rail, .body > p, .body > h3, .body > ul.clean, .stat, .reason, .card, .tablebox, tbody tr, details, pre) {
+      opacity: 0; transform: translateY(26px);
+      transition: opacity .9s cubic-bezier(.2, .6, .2, 1), transform .9s cubic-bezier(.2, .6, .2, 1); }
+    .motion :is(.rail, .body > p, .body > h3, .body > ul.clean, .stat, .reason, .card, .tablebox, tbody tr, details, pre).in { opacity: 1; transform: none; }
+    .motion .body figure img { clip-path: inset(0 100% 0 0); transition: clip-path 1.2s cubic-bezier(.65, 0, .25, 1); }
+    .motion .body figure.in img { clip-path: inset(0 0 0 0); }
+    .motion .body figure figcaption { opacity: 0; transition: opacity .7s ease-out .7s; }
+    .motion .body figure.in figcaption { opacity: 1; }
+    .motion .stat .num { background-size: 0% 0.28em; transition: background-size .9s cubic-bezier(.65, 0, .25, 1) .45s; }
+    .motion .stat.in .num { background-size: 100% 0.28em; }
+    .motion .range .dot { transform: translateX(var(--dx)); opacity: 0; transition: transform 1.2s cubic-bezier(.2, .7, .2, 1), opacity .3s;
+                          transition-delay: calc(var(--i) * 100ms + 200ms); }
+    .motion .range .val { opacity: 0; transition: opacity .45s; transition-delay: calc(var(--i) * 100ms + 1150ms); }
+    .motion .range .bracket path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .9s ease-in-out 1.9s; }
+    .motion .range .bracket text { opacity: 0; transition: opacity .5s 2.6s; }
+    .motion .range.in .dot, .motion .range.in .val, .motion .range.in .bracket text { transform: none; opacity: 1; }
+    .motion .range.in .bracket path { stroke-dashoffset: 0; }
   }
-  @media (max-width: 640px) {
-    body { font-size: 18px; }
-    header.hero { padding-top: 40px; }
-    .lede { font-size: 20px; }
-    .stats, .reasons, .two { grid-template-columns: 1fr; }
-    .card { grid-template-columns: 1fr; }
+
+  /* ---------- smaller screens ---------- */
+  @media (max-width: 980px) {
+    :root { --gap: 40px; --rail: 200px; }
+    header.hero > .wrap { grid-template-columns: 1fr; grid-template-areas: "eyebrow" "title" "lede" "byline" "links" "chart"; }
+    figure.range { margin-top: 36px; }
+  }
+  @media (max-width: 760px) {
+    .wrap { padding: 0 20px; }
+    body { font-size: 17px; }
+    header.hero { padding: 48px 0 52px; }
+    h1 { margin-bottom: 28px; }
+    .lede { font-size: 19px; }
+    section { padding: 60px 0; }
+    section > .wrap, footer .wrap { grid-template-columns: 1fr; }
+    .rail { position: static; margin-bottom: 26px; }
+    .stats, .reasons, .cards, .two { grid-template-columns: 1fr; }
+    footer .ft-links { text-align: left; margin-top: 14px; }
+    footer p { margin-top: 10px; }
+    figure.range { padding: 16px 12px 12px; }
     .range .lab { font-size: 14.5px; }
     .range .val { font-size: 14px; }
-    .range .tick { font-size: 13px; }
+    .range .tick { font-size: 12.5px; }
     .range .bracket text { font-size: 14.5px; }
   }
 </style>
@@ -170,6 +223,7 @@
 <body>
 
 <nav aria-label="Sections">
+  <div class="progress" aria-hidden="true"></div>
   <div class="wrap">
     <a class="brand" href="#top">Cambridge Rent</a>
     <a href="#findings">Findings</a>
@@ -184,6 +238,7 @@
 
 <header class="hero" id="top">
   <div class="wrap">
+  <div class="hero-text">
     <p class="eyebrow">Independent research · Cambridge, Massachusetts</p>
     <h1>Cambridge rent: how much do sources disagree?</h1>
     <p class="lede">People moving to Cambridge for school or work get very different answers to "what does an apartment cost?" This project compares public rent sources, measures how far apart they are, and explains why.</p>
@@ -192,20 +247,21 @@
       <a class="btn btn-primary" href="#findings">Read the findings</a>
       <a class="btn btn-ghost" data-gh="" href="https://github.com/">View code &amp; data on GitHub</a>
     </div>
+  </div>
     <figure class="range" aria-labelledby="range-title">
       <p class="range-title" id="range-title">Typical monthly rent, by source</p>
       <svg viewBox="0 0 430 254" role="img" aria-label="Seven sources put typical Cambridge rent between $2,742 (Census, all renters) and $3,707 (Point2), $965 apart. Zillow $3,300, Apartments.com $3,356, Zumper $3,361, Redfin $3,618, RentCafe $3,643.">
       <text class="tick" x="193.3" y="16" text-anchor="middle">$2,800</text>
       <text class="tick" x="280.0" y="16" text-anchor="middle">$3,200</text>
       <text class="tick" x="366.7" y="16" text-anchor="middle">$3,600</text>
-      <g><text class="lab" x="138" y="38" text-anchor="end">Census (all renters)</text><line class="track" x1="150" y1="34" x2="410" y2="34"/><circle class="dot census" cx="180.8" cy="34" r="5"/><text class="val" x="189.8" y="38" text-anchor="start">$2,742</text></g>
-      <g><text class="lab" x="138" y="66" text-anchor="end">Zillow</text><line class="track" x1="150" y1="62" x2="410" y2="62"/><circle class="dot" cx="301.7" cy="62" r="5"/><text class="val" x="310.7" y="66" text-anchor="start">$3,300</text></g>
-      <g><text class="lab" x="138" y="94" text-anchor="end">Apartments.com</text><line class="track" x1="150" y1="90" x2="410" y2="90"/><circle class="dot" cx="313.8" cy="90" r="5"/><text class="val" x="322.8" y="94" text-anchor="start">$3,356</text></g>
-      <g><text class="lab" x="138" y="122" text-anchor="end">Zumper</text><line class="track" x1="150" y1="118" x2="410" y2="118"/><circle class="dot" cx="314.9" cy="118" r="5"/><text class="val" x="323.9" y="122" text-anchor="start">$3,361</text></g>
-      <g><text class="lab" x="138" y="150" text-anchor="end">Redfin</text><line class="track" x1="150" y1="146" x2="410" y2="146"/><circle class="dot" cx="370.6" cy="146" r="5"/><text class="val" x="361.6" y="150" text-anchor="end">$3,618</text></g>
-      <g><text class="lab" x="138" y="178" text-anchor="end">RentCafe</text><line class="track" x1="150" y1="174" x2="410" y2="174"/><circle class="dot" cx="376.0" cy="174" r="5"/><text class="val" x="367.0" y="178" text-anchor="end">$3,643</text></g>
-      <g><text class="lab" x="138" y="206" text-anchor="end">Point2</text><line class="track" x1="150" y1="202" x2="410" y2="202"/><circle class="dot" cx="389.9" cy="202" r="5"/><text class="val" x="380.9" y="206" text-anchor="end">$3,707</text></g>
-      <g class="bracket"><path d="M180.8 219 V224 H389.9 V219"/><text x="285.3" y="243" text-anchor="middle">$965 apart</text></g>
+      <g><text class="lab" x="138" y="38" text-anchor="end">Census (all renters)</text><line class="track" x1="150" y1="34" x2="410" y2="34"/><circle class="dot census" style="--i:0;--dx:-30.8px" cx="180.8" cy="34" r="5"/><text class="val" style="--i:0" x="189.8" y="38" text-anchor="start">$2,742</text></g>
+      <g><text class="lab" x="138" y="66" text-anchor="end">Zillow</text><line class="track" x1="150" y1="62" x2="410" y2="62"/><circle class="dot" style="--i:1;--dx:-151.7px" cx="301.7" cy="62" r="5"/><text class="val" style="--i:1" x="310.7" y="66" text-anchor="start">$3,300</text></g>
+      <g><text class="lab" x="138" y="94" text-anchor="end">Apartments.com</text><line class="track" x1="150" y1="90" x2="410" y2="90"/><circle class="dot" style="--i:2;--dx:-163.8px" cx="313.8" cy="90" r="5"/><text class="val" style="--i:2" x="322.8" y="94" text-anchor="start">$3,356</text></g>
+      <g><text class="lab" x="138" y="122" text-anchor="end">Zumper</text><line class="track" x1="150" y1="118" x2="410" y2="118"/><circle class="dot" style="--i:3;--dx:-164.9px" cx="314.9" cy="118" r="5"/><text class="val" style="--i:3" x="323.9" y="122" text-anchor="start">$3,361</text></g>
+      <g><text class="lab" x="138" y="150" text-anchor="end">Redfin</text><line class="track" x1="150" y1="146" x2="410" y2="146"/><circle class="dot" style="--i:4;--dx:-220.6px" cx="370.6" cy="146" r="5"/><text class="val" style="--i:4" x="361.6" y="150" text-anchor="end">$3,618</text></g>
+      <g><text class="lab" x="138" y="178" text-anchor="end">RentCafe</text><line class="track" x1="150" y1="174" x2="410" y2="174"/><circle class="dot" style="--i:5;--dx:-226.0px" cx="376.0" cy="174" r="5"/><text class="val" style="--i:5" x="367.0" y="178" text-anchor="end">$3,643</text></g>
+      <g><text class="lab" x="138" y="206" text-anchor="end">Point2</text><line class="track" x1="150" y1="202" x2="410" y2="202"/><circle class="dot" style="--i:6;--dx:-239.9px" cx="389.9" cy="202" r="5"/><text class="val" style="--i:6" x="380.9" y="206" text-anchor="end">$3,707</text></g>
+      <g class="bracket"><path pathLength="1" d="M180.8 219 V224 H389.9 V219"/><text x="285.3" y="243" text-anchor="middle">$965 apart</text></g>
       </svg>
     </figure>
   </div>
@@ -213,21 +269,28 @@
 
 <section id="findings">
   <div class="wrap">
+    <div class="rail">
     <p class="kicker">Key findings</p>
     <h2>Four things a newcomer should know</h2>
+    </div>
+    <div class="body">
     <div class="stats">
       <div class="stat"><div class="num">$965</div><p>Gap between the lowest and highest "typical rent" across seven public sources ($2,742 to $3,707 a month).</p></div>
       <div class="stat"><div class="num">$1,546 → $234</div><p>How much the city's 2-bedroom median exceeded HUD's Fair Market Rent in 2013 vs. 2025. The gap is closing.</p></div>
       <div class="stat"><div class="num">~$390</div><p>How much more new renters were asked than current renters paid each month, 2015–2024 (1- and 2-bedrooms). This gap is shrinking too.</p></div>
       <div class="stat"><div class="num">+$42 / −$38</div><p>Yearly change in median 2-bedroom rent, 2010–2025: up in dollars, down after inflation.</p></div>
     </div>
+    </div>
   </div>
 </section>
 
 <section id="sources">
   <div class="wrap">
+    <div class="rail">
     <p class="kicker">Finding 1</p>
     <h2>Seven sources, one city, almost $1,000 apart</h2>
+    </div>
+    <div class="body">
     <p>Six listing sites put typical Cambridge rent between $3,300 and $3,707 a month. The Census figure, $2,742, is lower because it counts every renter household, including people who signed their leases years ago.</p>
     <figure>
       <img src="assets/fig4_sources_all_sizes.png" alt="Dot chart of typical monthly rent in Cambridge by source: Census $2,742, Zillow $3,300, Apartments.com $3,356, Zumper $3,361, Redfin $3,618, RentCafe $3,643, Point2 $3,707." loading="lazy">
@@ -252,13 +315,17 @@
       <img src="assets/fig6_by_bedroom.png" alt="Dot chart of rent by apartment size for the city, HUD, Zillow and Apartments.com. Apartments.com is highest for every size; HUD and the city are within a few hundred dollars." loading="lazy">
       <figcaption>By apartment size. For 2-bedrooms, Apartments.com's average ($4,298, May 2026) is about $1,100 above the city's median ($3,175, Sept 2025).</figcaption>
     </figure>
+    </div>
   </div>
 </section>
 
 <section id="asked-paid">
   <div class="wrap">
+    <div class="rail">
     <p class="kicker">Finding 3</p>
     <h2>New renters pay a premium, but it is shrinking</h2>
+    </div>
+    <div class="body">
     <p>The city's asking rents (what a newcomer sees in listings) were higher than the Census median rent paid by all renter households in Cambridge: by <b>$390 a month for 1-bedrooms</b> (about 20%, paired t = 5.06, df = 8, p = 0.001) and <b>$384 for 2-bedrooms</b> (about 16%, t = 4.42, p = 0.002), 2015–2024.</p>
     <p>Rent paid rose about 40% over those years while the city's asking rents rose 4–9%, so by 2024 the gap had nearly closed. Census rent includes utilities and the city's usually does not, so the real premium is, if anything, larger.</p>
     <figure>
@@ -272,13 +339,17 @@
       <img src="assets/fig8_recent_movers.png" alt="Index chart, 2015 = 100: Census recent movers reach 128 and all renters 147 by 2024, while city asking rents reach 104 (1-bedroom) and 109 (2-bedroom). The city series track recent movers until 2022, then fall." loading="lazy">
       <figcaption>All series indexed to 2015 = 100. Census recent movers moved in within the last 1–3 years and include all apartment sizes, so only growth is compared, not levels.</figcaption>
     </figure>
+    </div>
   </div>
 </section>
 
 <section id="trend">
   <div class="wrap">
+    <div class="rail">
     <p class="kicker">Finding 4</p>
     <h2>Rising in dollars, falling after inflation</h2>
+    </div>
+    <div class="body">
     <p>A t-test for the slope of a regression line on the city's data (n = 16 years, 2010–2025) asks whether median rent has a linear trend over time. H<sub>0</sub>: β = 0; H<sub>a</sub>: β ≠ 0; α = 0.05.</p>
     <div class="tablebox">
       <table>
@@ -311,13 +382,17 @@
         <li><b>Robustness:</b> removing January 2010, 2020, or both keeps both results significant (p from 0.0009 to 0.044).</li>
       </ul>
     </details>
+    </div>
   </div>
 </section>
 
 <section id="methods">
   <div class="wrap">
+    <div class="rail">
     <p class="kicker">Methods</p>
     <h2>How the research was done</h2>
+    </div>
+    <div class="body">
     <p>The project combines statistical tests on public data with a qualitative review of how each source documents its numbers. Every result can be rebuilt from the raw data with one command.</p>
     <div class="cards">
       <a class="card" data-gh="methods/research-design.md" href="../methods/research-design.md"><h3>Research design</h3><p>How the question was evaluated and refined, with the method chosen for each version.</p></a>
@@ -340,13 +415,17 @@ python analysis/run_all.py</code></pre>
       <li>The Census "recent movers" window changes from year to year and mixes apartment sizes.</li>
       <li>No neighborhood-level rents or studio data from the city yet.</li>
     </ul>
+    </div>
   </div>
 </section>
 
 <section id="about">
   <div class="wrap">
+    <div class="rail">
     <p class="kicker">About</p>
     <h2>About this project</h2>
+    </div>
+    <div class="body">
     <p>This is an independent research project by <b>Alice Wang</b>, who moved to Cambridge, MA, and has independently searched for apartments and houses to rent and to buy. The goal is to help newcomers read rent numbers critically: to know what each source counts before relying on it.</p>
     <p>AI tools (Claude) were used to help collect public data, write analysis code and draft documentation. All figures can be checked against the listed sources and rebuilt with the included scripts.</p>
     <h3 style="margin-top: 24px;">Sources</h3>
@@ -358,12 +437,15 @@ python analysis/run_all.py</code></pre>
       <li><a href="https://www.census.gov/data/developers/data-sets/acs-1year.html">U.S. Census Bureau, American Community Survey 1-year estimates (table B25031)</a></li>
       <li>Zillow, Apartments.com, Zumper, Redfin, RentCafe and Point2 published rent pages (links in the data files)</li>
     </ul>
+    </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
+    <p class="ft-brand ft-extra">Cambridge Rent</p>
     <p>Code: MIT License · Text and figures: CC BY 4.0 · Data: terms of the original publishers. Data collected November 2026.</p>
+    <div class="ft-links ft-extra"><a data-gh="" href="https://github.com/">Code and data on GitHub</a><a href="#top">Back to top ↑</a></div>
   </div>
 </footer>
 
@@ -374,7 +456,7 @@ python analysis/run_all.py</code></pre>
       var dark = root.getAttribute('data-theme') !== 'light';
       btn.textContent = dark ? 'Light' : 'Dark';
       btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
-      document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#161514' : '#fbfaf6');
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#0d0f0e' : '#fafbf7');
     }
     if (btn) {
       sync();
@@ -385,8 +467,43 @@ python analysis/run_all.py</code></pre>
         sync();
       });
     }
-    // Underline the nav link for the section being read.
+
+    // Reading progress line.
+    var bar = document.querySelector('.progress'), ticking = false;
+    function progress() {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, window.scrollY / max) : 0) + ')';
+      ticking = false;
+    }
+    if (bar) {
+      window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(progress); } }, { passive: true });
+      window.addEventListener('resize', progress);
+      progress();
+    }
+
     if (!('IntersectionObserver' in window)) return;
+
+    // Content appears as it scrolls into view. Without this script, or with reduced motion, it is simply shown.
+    if (root.classList.contains('motion')) {
+      var sel = '.rail, .body > p, .body > h3, .body > ul.clean, .stat, .reason, .card, .body figure, .tablebox, tbody tr, details, pre';
+      document.querySelectorAll(sel).forEach(function (el) { el.classList.add('rv'); });
+      var io = new IntersectionObserver(function (entries) {
+        // Anything already scrolled past (e.g. after jumping via a menu link) is shown at once.
+        entries.forEach(function (e) {
+          if (!e.isIntersecting && e.boundingClientRect.bottom < 0) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+        var shown = entries.filter(function (e) { return e.isIntersecting; });
+        shown.forEach(function (e, i) {
+          e.target.style.transitionDelay = Math.min(i, 5) * 80 + 'ms';   // things arriving together cascade
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+      document.querySelectorAll('.rv, figure.range').forEach(function (el) { io.observe(el); });
+      root.setAttribute('data-motion-ready', '');
+    }
+
+    // Underline the nav link for the section being read.
     var links = {};
     document.querySelectorAll('nav a[href^="#"]:not(.brand)').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
     var spy = new IntersectionObserver(function (entries) {
